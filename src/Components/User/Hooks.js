@@ -10,7 +10,6 @@ import {
   query,
   where,
 } from "firebase/firestore";
-import { current } from "@reduxjs/toolkit";
 
 // Fetch Users Data
 export const useFetchUsers = () => {

@@ -5,15 +5,9 @@ import { AuthContext } from "../../Context/AuthContext";
 import UserCard from "./UserCards";
 import FilterForm from "./FilterForm";
 import Dialogs from "./Dialogs";
-import {
-  useFetchUsers,
-  useCurrentUser,
-  useCollections,
-  useFilterLogic,
-} from "./Hooks";
+import { useFetchUsers, useCollections, useFilterLogic } from "./Hooks";
 import { db } from "../../Context/firebase";
 import * as UtilityFunctions from "./UtilityFunctions";
-import { collection, query, where, getDocs } from "firebase/firestore";
 
 function UsersOnApp() {
   const users = useFetchUsers();
@@ -59,8 +53,6 @@ function UsersOnApp() {
     photoPriceRange,
     videoPriceRange
   );
-
-
 
   // Conversation Functions
 
