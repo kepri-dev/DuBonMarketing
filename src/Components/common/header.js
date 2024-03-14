@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { getDoc, doc } from "firebase/firestore";
 import "./Header.css";
-import logo from "../../Images/logo-3.png";
+import logo from "./logo-3.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faMagnifyingGlass,
