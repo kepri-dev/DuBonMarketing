@@ -5,8 +5,6 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { AuthContextProvider } from "./Context/AuthContext";
 import { ChatContextProvider } from "./Context/ChatContext";
-import { FavoritesProvider } from "./Context/FavoritesContext"; // Ensure this path is correct
-import { DialogProvider } from "./Context/DialogContext";
 import { UserDataProvider } from "./Context/UserDataContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
