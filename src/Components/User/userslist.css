@@ -1,0 +1,10 @@
+.user-item {
+    cursor: pointer;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .user-item:hover {
+    background-color: #f0f0f0;
+  }
+  

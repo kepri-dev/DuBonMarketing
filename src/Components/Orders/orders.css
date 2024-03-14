@@ -1,0 +1,268 @@
+.order-listing {
+  background-color: rgb(240, 240, 240);
+  border-radius: 15px;
+  padding: 20px;
+  width: 80%;
+  margin: 10px auto;
+  text-align: left;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.order-status {
+  text-align: center;
+  background-color: aliceblue;
+  width: fit-content;
+  padding: 10px;
+  border-radius: 15px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin: 0 auto;
+}
+
+.order-date-creation {
+  text-align: center;
+  margin: 10px auto;
+}
+
+.order-listing ul {
+  list-style-type: none;
+  padding-left: 10px;
+  display: block;
+  text-align: left;
+  overflow: auto;
+}
+
+.order-listing li {
+  margin-bottom: 10px;
+}
+
+.orderKey {
+  color: rgb(4, 0, 57);
+  font-weight: 400;
+}
+
+.orderValue {
+  font-weight: 700;
+  margin-left: 10px;
+}
+
+.status-pending-buttons {
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+}
+
+.status-confirmed-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.pending-delivery {
+  color: rgb(4, 0, 57);
+}
+
+.accept-order,
+.reject-order,
+.confirm-delivery,
+.status-confirmed-buttons button {
+  padding: 10px;
+  color: white;
+  border: none;
+  margin: 0 10px;
+  border-radius: 15px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  font-size: 1rem;
+}
+
+.status-confirmed-buttons button {
+  background-color: rgb(4, 0, 57);
+}
+
+.accept-order:hover,
+.reject-order:hover,
+.confirm-delivery:hover {
+  transform: scale(1.1);
+}
+
+.accept-order,
+.confirm-delivery {
+  background-color: rgb(4, 0, 57);
+}
+
+.reject-order {
+  background-color: red;
+}
+
+.review-section {
+  background-color: #f3f4f6; /* Light grey background */
+  padding: 20px;
+  border-radius: 8px;
+  margin-top: 20px;
+}
+
+.review-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.rating-section,
+.review-textarea {
+  margin-bottom: 15px;
+}
+
+#rating-select,
+#review-text {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border-radius: 5px;
+  border: 1px solid #ccd6dd;
+}
+
+.submit-review-btn {
+  padding: 10px 35px;
+  border-radius: 5px;
+  background-color: rgb(4, 0, 57);
+  color: white;
+  cursor: pointer;
+  border: none;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+
+.submit-review-btn:hover {
+  background-color: #3867d6; /* Darker blue */
+}
+
+/*Order Form Modal*/
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal {
+  background-color: white;
+  padding: 40px;
+  border-radius: 5px;
+  max-width: 500px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.modal-close-btn {
+  padding: 5px 10px;
+  border-radius: 5px;
+  background-color: grey;
+  color: white;
+  cursor: pointer;
+  border: none;
+  float: right;
+}
+
+.modal h2,
+.modal label,
+.modal legend {
+  color: rgb(4, 0, 57); /* same as your other CSS for consistency */
+  font-weight: 600;
+}
+
+.modal input[type="number"],
+.modal select {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.modal input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+.modal button[type="submit"] {
+  padding: 10px 35px;
+  border-radius: 5px;
+  background-color: rgb(4, 0, 57); /* Button background color */
+  color: white; /* Button text color */
+  cursor: pointer;
+  border: none;
+  font-size: 16px;
+  font-weight: 600;
+  display: block; /* Make the button block level so it spans the width of its container */
+  width: 100%; /* Optional: if you want the button to be full width */
+  margin-top: 10px;
+}
+
+.modal button[type="submit"]:hover {
+  background-color: #000; /* Darker shade for hover effect */
+}
+
+/*OrderList.js*/
+
+.orders-container {
+  display: flex;
+  justify-content: space-around; /* Or space-between */
+  gap: 20px; /* Adjust the gap between columns */
+  background-color: rgb(240, 240, 240);
+  padding: 25px;
+  height: 100vh;
+}
+
+.status-column {
+  flex: 1;
+  min-width: 150px; /* Adjust based on your preference */
+}
+
+.orders-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.order-item {
+  display: flex;
+  align-items: center;
+  gap: 20px; /* Adjust the space between image and details */
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.order-item img {
+  width: 60px; /* Adjust the size of the image */
+  height: 60px; /* Adjust the size of the image */
+  border-radius: 50%; /* Makes the image circular */
+  object-fit: cover;
+}
+
+.order-item h3 {
+  margin: 0;
+  color: rgb(4, 0, 57); /* Using your color */
+}
+
+.order-item ul {
+  list-style: none;
+  padding: 0;
+}
+
+.order-item li {
+  margin-bottom: 5px;
+}
+
+.order-item:hover {
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}

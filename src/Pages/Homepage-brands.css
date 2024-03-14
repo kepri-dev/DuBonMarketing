@@ -1,0 +1,453 @@
+* {
+  font-family: "Montserrat", "Montserrat Alternates";
+}
+/* Header Section */
+.headline-div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem 10%; /* Reduced padding for less height */
+  max-width: 1200px; /* Adjust the max-width as needed */
+  margin: 0 auto; /* Center the header div */
+}
+
+.headline-text {
+  flex: 1; /* Take up the remaining space */
+  padding-right: 2rem; /* Adjust spacing between text and image */
+  text-align: left; /* Align text to the left */
+}
+
+.headline-text h1 {
+  color: #040039; /* Dark blue color */
+  font-size: 3rem; /* Larger font size for h1 */
+  margin-bottom: 1rem; /* Space between h1 and h2 */
+}
+
+.headline-text h2 {
+  color: grey; /* Grey color for h2 */
+  font-size: 1.5rem; /* Smaller font size for h2 */
+}
+
+.headline-text button {
+  background-color: #040039; /* Primary Dark Color */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 0.8rem 1.6rem;
+  font-size: 1rem;
+  margin-top: 1rem;
+}
+
+.headline-text button:hover {
+  background-color: rgba(4, 0, 57, 0.8); /* Slightly lighter blue on hover */
+}
+
+.headline-image {
+  flex-basis: 50%; /* Adjust the width of the image container */
+  display: flex;
+  justify-content: flex-end;
+}
+
+.headline-image img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+/* Case Studies Section */
+.case-studies-div {
+  background-color: #040039; /* Primary Dark Color */
+  color: white;
+  padding: 2rem; /* Adjusted padding to reduce height */
+  text-align: center; /* Center the text */
+}
+
+.case-studies-div h2 {
+  font-size: 2rem; /* Increased font size */
+  margin-bottom: 2rem; /* Space below the heading */
+  line-height: 1.2; /* Adjust line spacing for better readability */
+  text-align: center;
+}
+
+.logos-hp {
+  overflow: hidden;
+  white-space: nowrap;
+  position: relative;
+  background-color: transparent;
+  width: 100%;
+}
+
+@keyframes slide {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+.logos-hp:hover .logos-slide-hp {
+  animation-play-state: paused;
+}
+
+.logos-slide-hp {
+  display: inline-block;
+  animation: 45s slide infinite linear;
+}
+
+.logos-slide-hp img {
+  height: 300px;
+  width: 300px;
+  margin: 0 40px;
+}
+
+/*How to use */
+
+.how-to-use-div {
+  max-width: 1200px; /* Set a max width for the container */
+  margin: 0 auto; /* Center the container */
+  padding: 2rem 0; /* Padding top and bottom */
+  background-color: #fff; /* Assuming a white background */
+}
+
+.how-to-use-steps {
+  display: flex; /* Use flexbox for layout */
+  flex-wrap: wrap; /* Allow items to wrap as needed */
+  justify-content: center; /* Center items horizontally */
+  align-items: center; /* Align items vertically */
+  margin-bottom: 3rem; /* Space between steps */
+  padding: 2rem; /* Padding inside each step */
+  border: 1px solid #eaeaea; /* Light border */
+  border-radius: 10px; /* Rounded corners */
+}
+
+.how-to-use-steps div {
+  flex-basis: 45%; /* Each child takes up 45% of the container width */
+  margin: 1rem; /* Space around each child */
+}
+
+.how-to-use-steps h1 {
+  color: #040039; /* Dark purple color for headers */
+  font-size: 1.8rem; /* Larger font size for headers */
+  margin-bottom: 1rem; /* Space below the header */
+}
+
+.how-to-use-steps p {
+  color: grey;
+  font-size: 1rem; /* Standard font size for paragraph */
+}
+
+.how-to-use-steps button {
+  background-color: #040039; /* Primary Dark Color */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 0.8rem 1.6rem;
+  font-size: 1rem;
+  cursor: pointer; /* Cursor change to signify clickable */
+  width: auto; /* Let the button size according to its content */
+  margin-top: 1rem;
+  align-self: center; /* Center button in its flex container */
+}
+
+.how-to-use-steps button:hover {
+  background-color: rgba(4, 0, 57, 0.8);
+}
+
+.how-to-use-steps img {
+  width: 100%; /* Responsive Images */
+  height: auto;
+  border-radius: 10px; /* Optional: for rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+/* Benefits Section */
+.benefits-div {
+  background-color: white; /* Change background color if needed */
+  padding: 4rem 0; /* More vertical padding for breathing space */
+  max-width: 1200px; /* Max width for the content */
+  margin: 0 auto; /* Centering the div */
+}
+
+.benefits-div h1 {
+  color: #040039; /* Using a darker shade for better readability */
+  font-size: 2.5rem; /* Larger font size for the main heading */
+  margin-bottom: 2rem; /* More space below the heading */
+  text-align: center; /* Center align the heading */
+}
+
+.benefits-div > div {
+  display: flex;
+  flex-direction: row; /* Align items in a row */
+  justify-content: center; /* Center items horizontally */
+  gap: 2rem; /* Space between columns */
+}
+
+.benefits-div h2 {
+  font-size: 1.5rem; /* Larger font size for subheadings */
+  color: #040039; /* Primary Dark Color for headings */
+  margin-bottom: 1rem; /* Space below the subheading */
+  text-align: center; /* Center align the heading */
+}
+
+.benefits-div p {
+  color: #333; /* Darker grey for better readability */
+  font-size: 1rem; /* Adjust font size for preference */
+  line-height: 1.5; /* Increase line height for readability */
+  padding: 0 1rem; /* Padding on the sides */
+}
+
+/* Button Style */
+
+.button {
+  background-color: #040039; /* Primary Dark Color */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 0.8rem 1.6rem;
+  font-size: 1rem;
+  transition: background-color 0.3s;
+}
+
+.button:hover {
+  background-color: rgba(4, 0, 57, 0.8);
+}
+
+.market-research-div {
+  background-color: #040039; /* Your blue color */
+  color: #f0f0f0; /* Light grey for text */
+  padding: 2rem 0;
+  font-size: 1.2rem;
+}
+
+.market-research-content {
+  margin: 0 auto; /* Center the content */
+}
+
+.market-research-intro {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 auto; /* Center the header div */
+  max-width: 1200px;
+}
+
+.market-research-text {
+  text-align: left;
+  line-height: 2;
+  align-items: center;
+}
+
+.market-research-text h1 {
+  font-size: 2rem; /* Large text for H1 */
+  color: white; /* White text for H1 */
+}
+
+.market-research-text p {
+  font-size: 1.25rem; /* Larger than normal text */
+  color: #f0f0f0; /* Light grey for paragraph */
+  opacity: 0.9; /* Slightly transparent */
+}
+
+.background-market-research {
+  flex-basis: 100%; /* Adjust the width of the image container */
+  display: flex;
+  justify-content: flex-end;
+}
+
+.background-market-research img {
+  max-width: 100%;
+  height: max-content;
+}
+
+.comparison-action {
+  background-color: white; /* White background for button */
+  color: #040039; /* Blue text for button */
+  border: none;
+  padding: 15px 30px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  margin: 20px 0px;
+  font-size: 1.2rem;
+}
+
+.market-research-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  text-align: center;
+  max-width: 1200px; /* Adjust the max-width as needed */
+  align-items: center;
+  margin: 0 auto;
+}
+
+.stat h1 {
+  margin-bottom: 0.5rem;
+  color: white; /* White text for H1 in stats */
+}
+
+.market-research-comparison {
+  margin-top: 2rem; /* Space from the above div */
+}
+
+.market-research-comparison table {
+  border-collapse: collapse;
+  opacity: 0.8; /* Slightly transparent */
+  margin: 0 auto;
+}
+
+.market-research-comparison th,
+.market-research-comparison td {
+  padding: 20px 40px;
+  text-align: left;
+  line-height: 2rem;
+}
+
+.market-research-comparison th {
+  background-color: rgba(255, 255, 255, 0.1); /* Slightly visible background */
+  margin: 0 10px;
+}
+
+.market-research-comparison td {
+  text-align: center;
+}
+
+.table-features {
+  text-align: left !important;
+  font-weight: bolder;
+}
+
+.DBM-Column {
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.4
+  ); /* Less transparent for DBM column */
+  color: white;
+  font-weight: bolder;
+}
+
+/* Testimonials*/
+
+.testimonials-section {
+  background-color: #fff; /* Choose a light background color */
+  padding: 4rem;
+  text-align: center;
+}
+
+.testimonials-header {
+  color: #040039; /* Primary Dark Color */
+  margin-bottom: 2rem;
+  font-size: 2.5rem;
+}
+
+.testimonials-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: 2rem;
+}
+
+.customer-review {
+  background-color: #f9f9f9; /* Light background for each review */
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+  max-width: 350px; /* Fixed width for each review */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.customer-image img {
+  width: 100px; /* Adjust as needed */
+  height: 100px; /* Adjust as needed */
+  border-radius: 50%; /* Circular image */
+  margin-bottom: 1rem;
+}
+
+.customer-content {
+  text-align: center;
+}
+
+.customer-content h2 {
+  color: #040039; /* Primary Dark Color */
+  margin-bottom: 0.5rem;
+  align-items: center;
+  text-align: center;
+}
+
+.customer-title {
+  color: grey; /* Subdued text color */
+  font-style: italic;
+  margin-bottom: 1rem;
+}
+
+.customer-testimonial {
+  color: #040039; /* Primary Dark Color */
+  font-size: 1rem; /* Adjust as needed */
+  line-height: 1.5;
+}
+
+/* Add any additional styling as needed */
+
+/*FAQ*/
+
+.faq-section {
+  background-color: #040039; /* Blue background */
+  padding: 2rem;
+  color: #fff; /* White text */
+}
+
+.faq-header {
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 2.5rem;
+}
+
+.faq-container {
+  max-width: 800px; /* Adjust as needed */
+  margin: 0 auto; /* Center the container */
+}
+
+.single-faq {
+  background-color: #f9f9f9; /* Light background for each FAQ */
+  border-radius: 5px;
+  margin-bottom: 1rem;
+  overflow: hidden; /* Ensures the border-radius applies to child elements */
+}
+
+.faq-question {
+  background-color: transparent;
+  border: none;
+  padding: 1rem;
+  width: 100%;
+  text-align: left;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.faq-question:hover {
+  background-color: rgba(255, 255, 255, 0.1); /* Slight highlight on hover */
+}
+
+.faq-answer,
+.faq-answer-active {
+  background-color: rgba(255, 255, 255, 0.1); /* Light background for answers */
+  padding: 1rem;
+  display: none; /* Initially hidden */
+}
+
+.faq-answer-active {
+  display: block; /* Show when active */
+}
+
+.faq-answer p,
+.faq-answer-active p {
+  font-size: 1rem;
+  line-height: 1.5;
+  color: rgba(4, 0, 57);
+}

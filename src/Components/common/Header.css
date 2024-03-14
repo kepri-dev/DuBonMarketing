@@ -1,0 +1,75 @@
+.navigation {
+  background-color: white;
+  height: 80px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center; 
+  width: 100%; 
+  margin: 0 auto;
+  position: sticky;
+  position: -webkit-sticky;
+  z-index: 1000;
+  top: 0;
+  padding: 10px 0px;
+}
+
+.logo-section,
+.navbar-1,
+.navbar-2 {
+  flex: 1; /* Allows each section to grow */
+  display: flex;
+  align-items: center; /* Aligns items vertically */
+  justify-content: center; /* Centers items horizontally */
+}
+
+.navbar-1,
+.navbar-2 {
+  margin-right: 100px; /* Adjust as necessary */
+  display: flex;
+  align-items: center; /* Ensure vertical alignment */
+}
+
+.navbar-2 img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.logo-png {
+  /* existing styles */
+  max-height: 80px; /* Adjust based on your preference */
+  max-width: 80px; /* Adjust based on your preference */
+  margin: 0 20px; /* Optional: add margin if needed */
+}
+
+ul {
+  display: flex;
+  align-items: center;
+}
+
+li {
+  display: flex;
+  margin: 0px 10px;
+  font-size: 1.1rem;
+  font-weight: 400;
+}
+
+li:hover {
+  transform: scale(1.05);
+}
+
+.link {
+  text-decoration: none;
+  color: rgb(4, 0, 57);
+  margin: 0px 10px;
+  white-space: nowrap; /* Prevents wrapping */
+}
+
+a:visited {
+  color: rgb(4, 0, 57);
+}
+
+a:active {
+  color: rgb(255, 255, 255);
+  background-color: rgb(4, 0, 57);
+}

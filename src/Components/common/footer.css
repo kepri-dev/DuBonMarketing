@@ -1,0 +1,27 @@
+/* Footer.css */
+.footer {
+  background-color: #040039; /* Adjust the color to match your theme */
+  color: white;
+  text-align: center;
+  padding: 10px 0;
+
+  bottom: 0;
+  width: 100%;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px; /* Adjust the spacing between links */
+}
+
+.footer a {
+  color: white;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.footer a:hover {
+  color: #aaa; /* Adjust hover color */
+}

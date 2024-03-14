@@ -1,0 +1,506 @@
+.user-profile-container,
+.profile-form {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 20px;
+  max-width: 80vw;
+  margin: 0 auto;
+  padding-top: 20px;
+}
+
+/*UserProfile*/ /*UserProfile*/ /*UserProfile*/ /*UserProfile*/
+
+/*HeaderSection*/
+
+.header-section,
+.industries-section,
+.media-showcase-section,
+.media-showcase-section-dash,
+.logos-dash,
+.user-generated-content-section {
+  position: relative;
+  max-width: 800px;
+  margin: 20px auto;
+  background-color: white;
+  border-radius: 10px;
+  padding: 20px;
+  overflow: hidden;
+}
+
+.logos-dash {
+  background-color: rgb(4, 0, 57);
+  color: white;
+}
+
+.logos-dash label,
+.media-showcase-section-dash label {
+  color: white;
+}
+
+.cover-image-container {
+  position: relative;
+}
+
+.cover-file-input {
+  display: none;
+}
+
+.coverImg {
+  object-fit: cover;
+  width: 100%;
+  height: 300px;
+  border-radius: 10px 10px 0 0;
+}
+
+.profile-section {
+  position: absolute;
+  top: 180px;
+  left: 20px;
+  padding: 20px;
+}
+
+.profile-pic img {
+  border-radius: 50%;
+  object-fit: cover;
+  width: 180px;
+  height: 180px;
+  border: 4px solid white;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 1;
+}
+
+.user-info-buttons {
+  margin-top: 15px;
+  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.user-information h1 {
+  text-align: left;
+  color: rgb(4, 0, 57);
+  font-weight: 700;
+  font-size: 24px;
+  padding: 0;
+  margin-bottom: 10px;
+  margin-top: 70px;
+}
+
+.user-information p {
+  color: rgb(122, 122, 122);
+  text-align: left;
+  width: 100%;
+  margin-top: 0px;
+  margin-bottom: 5px;
+  font-size: 18px;
+}
+
+.user-bio,
+.industries-section p {
+  color: rgb(4, 0, 57);
+  text-align: left;
+  font-size: 1.1rem;
+  width: 90%;
+}
+
+.user-bio button {
+  border: none;
+  color: rgb(4, 0, 57);
+  font-size: 1.05rem;
+  background-color: white;
+  text-decoration: underline;
+  margin: 0px 0px 10px 0px;
+}
+
+.user-bio button:hover {
+  color: rgba(4, 0, 57, 0.445);
+  transform: scale(1.05);
+  border-radius: 5px;
+  color: white;
+}
+
+.header-section .add-to-favorites,
+.header-section .start-conversation {
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: rgba(255, 255, 255, 0.046);
+  width: 15%;
+  border: none;
+  padding: 15px;
+  line-height: 200%;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  margin-top: 15px;
+}
+
+.header-section .buttons-users-interaction {
+  display: inline-flex;
+  justify-content: flex-start;
+}
+
+/*MediaShowcase*/
+.media-showcase-section,
+.media-showcase-section-dash {
+  padding: 20px;
+  height: auto;
+  background-color: white;
+  color: white;
+}
+
+.media-showcase-section-dash {
+  background-color: rgb(4, 0, 57);
+}
+
+.user-generated-content-section {
+  position: relative;
+  max-width: 1000px;
+  margin: 20px auto;
+  background-color: white;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.user-generated-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  max-height: calc(2 * (500px));
+  overflow: hidden;
+}
+
+.user-generated-content::after {
+  content: "";
+  position: absolute;
+  bottom: 60px;
+  left: 0;
+  right: 0;
+  height: 200px;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0),
+    rgba(255, 255, 255, 1)
+  );
+  pointer-events: none;
+}
+
+.user-generated-content.show-all::after {
+  display: none;
+}
+
+.user-generated-content img {
+  flex: 1 0 calc(50% - 20px);
+  margin: 10px;
+  max-width: calc(50% - 20px);
+}
+
+.show-all {
+  max-height: none; /* Remove the height restriction when showing all */
+}
+
+.show-more-btn {
+  padding: 10px 20px;
+  background-color: white;
+  border: none;
+  cursor: pointer;
+  color: rgb(4, 0, 57);
+}
+
+.user-generated-content-2 {
+  /* animation: 10s reverseslide infinite linear; */
+  overflow: hidden;
+  display: inline-flex;
+}
+
+.media-showcase-section h2,
+.user-generated-content-section h2,
+.industries-section h2 {
+  text-align: left;
+  color: rgb(4, 0, 57);
+  font-weight: 700;
+  font-size: 24px;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+.media-showcase-section label {
+  color: white;
+}
+
+.media-showcase-section p {
+  font-size: 1.1rem;
+  font-weight: bolder;
+  text-align: center;
+}
+
+.media-showcase {
+  display: flex;
+  white-space: nowrap;
+}
+
+.slide-animation {
+  animation: slide 10s linear infinite;
+}
+
+.media-showcase:hover,
+.user-generated-content:hover,
+.previous-work-slide:hover {
+  animation-play-state: paused;
+}
+
+.media-showcase img,
+.user-generated-content img,
+.user-generated-content-2 img {
+  width: 150px;
+  height: 150px;
+  object-fit: cover; /* For brand logos */
+  border-radius: 10px;
+  margin: 0 10px;
+}
+
+.user-generated-content img,
+.user-generated-content-2 img,
+.previous-work-slide img {
+  width: 300px;
+  height: 450px;
+  flex: 1 0 calc(33.333% - 20px); /* Adjust the percentage to fit three items per line */
+  margin: 10px; /* Adjust margin as needed, this will create space between the items */
+  max-width: calc(
+    33.333% - 20px
+  ); /* Same as flex-basis, to limit image width */
+}
+
+.previous-work-slide img {
+  margin: auto 10px;
+  border-radius: 10px;
+}
+
+.faq-container-userprofile {
+  position: relative;
+  max-width: 1000px;
+  margin: 20px auto;
+  background-color: white;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.single-faq-userprofile {
+  background-color: white;
+  border-radius: 5px;
+  margin-bottom: 1rem;
+  overflow: hidden; /* Ensures the border-radius applies to child elements */
+  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+.faq-question-userprofile {
+  background-color: transparent;
+  border: none;
+  padding: 2rem;
+  width: 100%;
+  text-align: left;
+  font-size: 1.2rem;
+  cursor: pointer;
+  font-weight: 600;
+  color: rgb(4, 0, 57);
+}
+
+.faq-question-userprofile:hover {
+  transform: translateY(-3px);
+}
+
+.faq-answer-userprofile,
+.faq-answer-userprofile-active {
+  background-color: rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transition: opacity 0.6s, max-height 0.4s ease-in-out; /* Smooth transition for opacity and max-height */
+}
+
+.faq-answer-userprofile-active {
+  max-height: 300px;
+  opacity: 1;
+}
+
+.faq-answer-userprofile p,
+.faq-answer-userprofile-active p {
+  font-size: 1.2rem;
+  line-height: 1.5;
+  color: rgba(4, 0, 57);
+  text-align: left;
+  margin-left: 15px;
+  max-width: 90%;
+}
+
+/*UserProfileInfo*/ /*UserProfileInfo*/ /*UserProfileInfo*/ /*UserProfileInfo*/
+
+.user-profile-info {
+  max-width: 90%;
+}
+
+.pricing-plans {
+  margin-bottom: 20px;
+}
+
+.pricing-plan {
+  background-color: white;
+  border-radius: 10px;
+  padding-bottom: 10px;
+}
+
+.add-ons-section {
+  background-color: transparent;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  padding-bottom: 10px;
+  box-shadow: 0px 1px rgba(0, 0, 0, 0.2);
+}
+
+.toggle-buttons-container {
+  border-radius: 15px;
+  margin: 20px auto;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background-color: white;
+  box-shadow: 0px 1px rgba(0, 0, 0, 0.2);
+  max-width: 100%;
+}
+
+.toggle-button-prices {
+  padding: 10px 35px;
+  border-radius: 5px;
+  background-color: white;
+  color: rgb(4, 0, 57);
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  border: none;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.toggle-button-prices.selected {
+  background-color: rgb(4, 0, 57);
+  color: white;
+}
+
+.pricing-details {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0px 35px;
+}
+
+.pricing-plan h2,
+.add-ons-section h3 {
+  color: rgb(4, 0, 57);
+  font-weight: 600;
+  font-size: 1.4rem;
+}
+.add-ons-section h3 {
+  text-align: left;
+  padding: 0px 50px 10px 50px;
+}
+
+.pricing-plan p,
+.add-ons-section p {
+  color: rgb(4, 0, 57);
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+.pricing-plan ul,
+.add-ons-section ul {
+  display: block;
+}
+
+.pricing-plan li,
+.add-ons-section li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: black;
+  margin-bottom: 5px;
+  font-size: 18px;
+}
+
+.pricing-plan li .description,
+.add-ons-section .description {
+  text-align: left;
+  color: black;
+}
+
+.pricing-plan li .price,
+.add-ons-section .price {
+  text-align: right;
+  color: rgb(4, 0, 57); /* Color for the price */
+  margin-left: auto; /* Pushes the price to the right */
+}
+
+.contact-customization button {
+  padding: 20px 20px;
+  background-color: rgb(4, 0, 57);
+  color: white;
+  border: none;
+  cursor: pointer;
+  z-index: 10;
+  border-radius: 5px;
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.5);
+  font-size: 16px;
+  font-weight: 600;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  margin: 10px auto;
+}
+
+.contact-customization button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.client-testimonials {
+  margin: 10px;
+  background-color: white;
+  border-radius: 10px;
+  padding: 10px;
+  box-shadow: 0px 1px rgba(0, 0, 0, 0.2);
+  color: rgb(4, 0, 57);
+}
+
+.client-testimonials h1 {
+  text-align: left;
+  color: rgb(4, 0, 57);
+  font-weight: 700;
+  font-size: 1.4rem;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+}
+
+.client-testimonials-author {
+  color: rgb(122, 122, 122);
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.client-testimonials-author img {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+}
+
+.author-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.author-name-rating {
+  display: flex;
+  align-items: center; /* Align the author name and rating on the cross axis */
+  gap: 8px; /* Adjust as necessary */
+}
+
+.client-testimonials-text {
+  text-align: left;
+}

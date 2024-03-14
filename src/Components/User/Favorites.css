@@ -1,0 +1,83 @@
+.favorites-layout {
+  display: grid;
+  grid-template-columns: 1fr 2fr; /* 1/3 and 2/3 screen */
+  gap: 10;
+  height: 100vh; /* Full viewport height, adjust as needed */
+  width: 95vw;
+  margin: 0 auto;
+}
+
+.all-collections-names,
+.all-favorite-creators {
+  overflow-y: auto; /* In case of scrolling */
+  color: rgb(4, 0, 57);
+}
+
+.all-collections-names,
+.all-favorite-creators h1 {
+  text-transform: uppercase;
+}
+.collection-name {
+  display: grid; /* Use grid to layout the inner elements */
+  grid-template-columns: 1fr auto; /* Adjust as per your design */
+  gap: 20px; /* Space between grid items */
+  align-items: center; /* Align items vertically */
+  padding: 10px;
+  margin-bottom: 20px; /* Consistent margin for spacing */
+  border: none; /* Remove button border */
+  border-radius: 5px;
+  width: 80%; /* Ensure the button takes the full width */
+  color: rgb(4, 0, 57);
+  font-size: 18px;
+  background-color: rgb(250, 250, 250);
+  box-shadow: 0px 1px 2px rgba(171, 169, 169, 0.8);
+}
+
+
+.favorite-creator {
+  display: grid; /* Use grid to layout the inner elements */
+  grid-template-columns: 100px 2fr 1fr auto; /* Adjust as per your design */
+  gap: 15px; /* Space between grid items */
+  align-items: center; /* Align items vertically */
+  padding: 10px;
+  margin-bottom: 20px; /* Consistent margin for spacing */
+  border: none; /* Remove button border */
+  border-radius: 5px;
+  width: 100%; /* Ensure the button takes the full width */
+  color: rgb(4, 0, 57);
+  font-size: 18px;
+  background-color: rgb(250, 250, 250);
+  box-shadow: 0px 1px 2px rgba(171, 169, 169, 0.8);
+  max-width: 95%;
+}
+
+/* Adjust this to match your needs, potentially making the image a circle */
+.favorite-creator img {
+  border-radius: 50%;
+  object-fit: cover;
+  max-width: 80%;
+}
+
+/* Layout for user info */
+.favorite-creator > div {
+  display: flex;
+  flex-direction: column; /* Stack children vertically */
+}
+
+/* Style for collection name */
+.favorite-creator .user-collection {
+  justify-self: center; /* Center the collection name in its column */
+  padding: 10px 15px; /* Add padding if needed */
+  color: white;
+  background-color: rgb(194, 194, 194);
+  border-radius: 25px;
+}
+
+/* Adjustments for buttons within the .user-actions div */
+.user-actions button {
+  background: none; /* Remove button background */
+  border: none; /* Remove button border */
+  margin: 0 5px; /* Adjust margin between buttons */
+  font-size: 1.5rem; /* Example size, adjust as needed */
+}
+

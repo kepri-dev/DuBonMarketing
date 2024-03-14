@@ -1,0 +1,112 @@
+.register-container {
+  font-family: "Montserrat Alternates";
+  height: 100%;
+  width: 100%;
+  background-image: url("https://firebasestorage.googleapis.com/v0/b/test-firebase-9badc.appspot.com/o/backgroundimageloginregister%2FGreen%20and%20White%20Photographic%20Blogger%20Bio-Link%20Website.png?alt=media&token=8b5f8ade-1d22-4610-bf2d-ea95e084bbfb");
+  background-size: 100%;
+}
+
+.register-form {
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(4, 0, 57);
+  padding: 20px 40px;
+  border-radius: 15px;
+  color: white;
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.8);
+  width: 40vw;
+  margin: 20px auto 10px auto;
+}
+
+.register-form h2 {
+  text-align: left;
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.register-form input[type="text"],
+.register-form input[type="email"],
+.register-form input[type="password"] {
+  margin-bottom: 30px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.register-form select {
+  margin-bottom: 20px;
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.register-form label {
+  margin-bottom: 15px;
+  color: white;
+  font-weight: bolder;
+}
+
+.register-form button {
+  padding: 10px 20px;
+  background-color: white;
+  color: rgb(4, 0, 57, 0.8);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  width: fit-content;
+  font-weight: bolder;
+  margin: 15px 0px 40px 0px;
+}
+
+.register-form button:hover {
+  background-color: white;
+  transform: scale(1.1);
+}
+
+.role-pick-register {
+  border: dashed white;
+  display: flex;
+  flex-direction: column;
+  margin: 10px auto;
+  padding: 15px;
+  border-radius: 15px;
+  line-height: 150%;
+}
+
+.role-pick-register h3 {
+  text-decoration: underline;
+  color: #f4788a;
+  margin: 10px auto;
+  line-height: 140%;
+}
+
+.radio-input {
+  opacity: 0;
+  position: absolute;
+}
+
+.radio-label {
+  position: relative;
+  padding-left: 35px;
+  cursor: pointer;
+  display: inline-block;
+  margin-right: 15px;
+}
+
+.radio-custom {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 20px;
+  width: 20px;
+  background-color: #fdfdfd;
+  border: 1px solid #ddd;
+  border-radius: 30%;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgb(4, 0, 57);
+}
+
+.radio-custom.checked {
+  background-color: rgb(4, 0, 57);
+}

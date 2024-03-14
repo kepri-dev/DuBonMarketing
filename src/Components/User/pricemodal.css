@@ -1,0 +1,153 @@
+/* For Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.photo-price-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 1000;
+}
+
+.photo-price-modal {
+  background: #fff;
+  width: 30vw;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  overflow-y: auto;
+  max-height: 90vh;
+}
+
+.modal-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  color: rgb(4, 0, 57);
+  position: relative;
+}
+
+.modal-header h2 {
+  font-size: 1.8rem;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  color: white;
+  position: absolute;
+  bottom: 20px;
+  left: 490px;
+  background-color: rgb(4, 0, 57);
+  border-radius: 8px;
+}
+
+.modal-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.basic-price-section,
+.add-ons-section-modal {
+  margin-bottom: 2rem;
+  border: dashed rgb(4, 0, 57) 1px;
+  border-radius: 8px;
+  box-shadow: 0px 6px 12px 0px rgb(4, 0, 57, 0.4);
+}
+.section-title-tooltip {
+  display: inline-flex;
+  align-items: center;
+}
+
+.add-ons-section h3,
+.basic-price-section h3 {
+  color: rgb(4, 0, 57);
+  margin: 1rem auto;
+  font-size: 1.4rem;
+  text-align: center;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 1rem;
+  color: rgb(4, 0, 57);
+  font-weight: 600;
+  font-size: 1.2rem;
+  text-align: center;
+}
+
+.form-group input[type="number"],
+.form-group input[type="text"] {
+  width: max-content;
+  padding: 1rem;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  transition: border-color 0.3s;
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: rgb(4, 0, 57);
+}
+
+.form-group input[type="number"]:focus,
+.form-group input[type="text"]:focus {
+  border-color: rgb(4, 0, 57);
+  outline: none;
+}
+
+.final-price-display {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background-color: #f8f8f8;
+  border-radius: 4px;
+}
+
+.final-price-display label {
+  font-weight: 600;
+  color: rgb(4, 0, 57);
+}
+
+.final-price {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: rgb(4, 0, 57);
+}
+
+.save-button,
+.edit-rates-button {
+  background-color: rgb(4, 0, 57);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: background-color 0.3s;
+}
+
+.save-button:hover,
+.edit-rates-button:hover {
+  background-color: rgba(4, 0, 57, 0.85);
+}
