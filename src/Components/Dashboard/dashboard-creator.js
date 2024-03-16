@@ -14,7 +14,7 @@ import MediaUploadDisplay from "./media-dashboard";
 import RatesDisplay from "./rates-dashboard";
 import InfoTooltip from "./InfoToolTip";
 
-const DashboardCreator = (photoPrice, videoPrice) => {
+const DashboardCreator = () => {
   const navigate = useNavigate();
   const { currentUser, updateUserInContext } = useContext(AuthContext);
   const [bio, setBio] = useState(currentUser?.bio || "");
@@ -34,6 +34,8 @@ const DashboardCreator = (photoPrice, videoPrice) => {
   const devices = ["Phone", "Pro Camera"];
   const [isUploading, setIsUploading] = useState(false);
   const isProfileComplete = currentUser?.profileComplete === true;
+
+  const genders = ["Male", "Female"];
 
   const countries = [
     "Morocco",
@@ -121,23 +123,12 @@ const DashboardCreator = (photoPrice, videoPrice) => {
     }
   };
 
-  // const handleFileUploads = async (files, storagePath, existingUrls) => {
-  //   const validFiles = files.filter(
-  //     (file) => file instanceof File && file.size > 0
-  //   );
-  //   const uploadPromises = validFiles.map(async (file) => {
-  //     const fileRef = ref(storage, `${storagePath}/${v4()}`);
-  //     const snapshot = await uploadBytes(fileRef, file);
-  //     const downloadUrl = await getDownloadURL(snapshot.ref);
-
-  //     return { url: downloadUrl, path: fileRef.fullPath };
-  //   });
-  //   const newUrls = await Promise.all(uploadPromises);
-  //   return [...existingUrls, ...newUrls];
-  // };
-
   const handleBioChange = (e) => setBio(e.target.value);
-  const handleGenderChange = (e) => setGender(e.target.value);
+  const handleGenderChange = (e) => {
+    setGender(e.target.value);
+  };
+
+  console.log(gender);
   const handleAgeChange = (e) => setAge(e.target.value);
   const handleTagChange = (e) => setTag(e.target.value);
 
@@ -396,19 +387,36 @@ const DashboardCreator = (photoPrice, videoPrice) => {
             <UserProfileInfo
               currentUser={currentUser}
               bio={currentUser?.bio}
-              gender={currentUser?.gender}
               tag={currentUser?.tag}
               age={currentUser?.age}
               coverUrl={currentUser?.coverUrl}
               imgUrl={currentUser?.imgUrl}
               isUploading={isUploading}
               onBioChange={handleBioChange}
-              onGenderChange={handleGenderChange}
               onAgeChange={handleAgeChange}
               onTagchange={handleTagChange}
               onCoverChange={handleCoverchange}
               onImgChange={handleImgChange}
             />
+            <label className="label-title">
+              Genders
+              <InfoTooltip infoText="Select your gender." />
+            </label>
+            {genders.map((gender, index) => (
+              <label className="checkbox-container-genders" key={index}>
+                <input
+                  type="radio"
+                  name="gender"
+                  value={gender}
+                  onChange={handleGenderChange}
+                  checked={gender === gender}
+                />
+                <span
+                  className={gender === gender ? "checkmark" : "radio-custom"}
+                ></span>
+                {gender}
+              </label>
+            ))}
 
             <CheckboxDashboard
               title={

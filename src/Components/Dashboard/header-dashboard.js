@@ -1,20 +1,23 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
+import "./dashboard-creator.css";
 
 function UserProfileInfo({
   currentUser,
   onTagchange,
   onBioChange,
-  onGenderChange,
+  handleGenderChange,
   onAgeChange,
   onCoverChange,
   onImgChange,
   isUploading,
   coverUrl,
   imgUrl,
+  title,
+  gender,
 }) {
-  
+  const genders = ["Male", "Female"];
   return (
     <div>
       <div className="cover-image-container">
@@ -88,12 +91,29 @@ function UserProfileInfo({
           className="bio-textarea"
         />
       </div>
-      <label className="label-title-header">Gender </label>
-      <select name="gender" onChange={onGenderChange}>
-        <option value="placeholder">{currentUser?.gender}</option>
-        <option value="Female">Female</option>
-        <option value="Male">Male</option>
-      </select>
+      {/* <div className="gender-selection">
+      <label className="label-title">Genders</label>
+
+        {genders.map((genderOption, index) => (
+          <label className="checkbox-container-genders" key={index}>
+            <input
+              type="radio"
+              name="gender"
+              value={genderOption}
+              onChange={handleGenderChange}
+              checked={currentUser.gender === genderOption}
+            />
+            <span
+              className={
+                currentUser.gender === genderOption
+                  ? "checkmark"
+                  : "radio-custom"
+              }
+            ></span>
+            {genderOption}
+          </label>
+        ))}
+      </div> */}
       <label className="label-title-header">Age</label>{" "}
       <input
         className="number"

@@ -235,6 +235,68 @@
   flex-wrap: wrap;
 }
 
+/*header*/
+
+.checkbox-container-genders {
+  cursor: pointer;
+  position: relative;
+  padding-left: 30px;
+  margin-left: 15px;
+}
+
+.checkbox-container-genders input[type="radio"] {
+  visibility: hidden;
+  position: absolute;
+}
+
+.checkbox-container-genders .checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 20px;
+  width: 20px;
+  background-color: #fdfdfd;
+  border: 1px solid rgb(4, 0, 57);
+  border-radius: 5px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.checkbox-container-genders .checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.checkbox-container-genders input[type="radio"]:checked + .checkmark:after {
+  display: block;
+  background-color: white;
+}
+
+.checkbox-container-genders .checkmark:after {
+  left: 6px;
+  top: 2px;
+  width: 4px;
+  height: 10px;
+  border: solid rgb(4, 0, 57);
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.radio-custom {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 20px;
+  width: 20px;
+  background-color: #fdfdfd;
+  border: 1px solid #ddd;
+  border-radius: 30%;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgb(4, 0, 57);
+}
+
+/*End of Header*/
 .checkbox-container-dash {
   cursor: pointer;
   position: relative;

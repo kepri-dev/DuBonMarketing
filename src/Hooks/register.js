@@ -44,9 +44,7 @@ const Register = () => {
           // await setDoc(doc(db, "messages", user.uid), {});
 
           const navigatePath =
-            role === "contentCreator" || role === "For Creators"
-              ? "/dashboard-creator"
-              : "/profils";
+            role === "For Creators" ? "/dashboard-creator" : "/profils";
           navigate(navigatePath);
         } catch (e) {
           console.error("Error adding document: ", e);
