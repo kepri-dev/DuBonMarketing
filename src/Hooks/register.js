@@ -56,6 +56,7 @@ const Register = () => {
         const errorCode = error.code;
         const errorMessage = error.message;
         console.error(errorCode, errorMessage);
+        alert(errorCode);
       });
   };
 
@@ -97,7 +98,7 @@ const Register = () => {
             case you are a creator, please select 'For Creators'
           </h3>
           {roles.map((item, index) => (
-            <label className="radio-label" key={index}>
+            <label className="checkbox-container" key={index}>
               <input
                 type="radio"
                 name="role"
@@ -105,12 +106,9 @@ const Register = () => {
                 checked={role === item.role}
                 onChange={(e) => setRole(e.target.value)}
                 required
-                className="radio-input"
               />
               <span
-                className={
-                  role === item.role ? "radio-custom checked" : "radio-custom"
-                }
+                className={role === item.role ? "checkmark" : "radio-custom"}
               ></span>
               {item.role}
             </label>

@@ -91,27 +91,55 @@ const DashboardCreator = (photoPrice, videoPrice) => {
     }
   }, [currentUser?.uid]);
 
-  const handleFileUploads = async (files, storagePath, existingUrls) => {
+  const handleFileUploads = async (files, storagePath) => {
+    setIsUploading(true);
     const validFiles = files.filter(
       (file) => file instanceof File && file.size > 0
     );
     const uploadPromises = validFiles.map(async (file) => {
       const fileRef = ref(storage, `${storagePath}/${v4()}`);
       const snapshot = await uploadBytes(fileRef, file);
-      const downloadUrl = await getDownloadURL(snapshot.ref);
-
-      return { url: downloadUrl, path: fileRef.fullPath };
+      return await getDownloadURL(snapshot.ref);
     });
-    const newUrls = await Promise.all(uploadPromises);
-    return [...existingUrls, ...newUrls];
+    const uploadedFilesUrls = await Promise.all(uploadPromises);
+    setIsUploading(false);
+    return uploadedFilesUrls;
   };
+
+  // Event handler adjustments for coverImg and imgUrl using URL.createObjectURL for immediate preview
+  const handleCoverchange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setCoverUrl(URL.createObjectURL(file));
+    }
+  };
+
+  const handleImgChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setImgUrl(URL.createObjectURL(file));
+    }
+  };
+
+  // const handleFileUploads = async (files, storagePath, existingUrls) => {
+  //   const validFiles = files.filter(
+  //     (file) => file instanceof File && file.size > 0
+  //   );
+  //   const uploadPromises = validFiles.map(async (file) => {
+  //     const fileRef = ref(storage, `${storagePath}/${v4()}`);
+  //     const snapshot = await uploadBytes(fileRef, file);
+  //     const downloadUrl = await getDownloadURL(snapshot.ref);
+
+  //     return { url: downloadUrl, path: fileRef.fullPath };
+  //   });
+  //   const newUrls = await Promise.all(uploadPromises);
+  //   return [...existingUrls, ...newUrls];
+  // };
 
   const handleBioChange = (e) => setBio(e.target.value);
   const handleGenderChange = (e) => setGender(e.target.value);
   const handleAgeChange = (e) => setAge(e.target.value);
   const handleTagChange = (e) => setTag(e.target.value);
-  const handleCoverchange = (e) => setCoverUrl(e.target.files[0]);
-  const handleImgChange = (e) => setImgUrl(e.target.files[0]);
 
   const handleToggleLanguage = (e) => {
     const option = e.target.value;
@@ -204,6 +232,25 @@ const DashboardCreator = (photoPrice, videoPrice) => {
     if (!currentUser) return;
 
     const user = auth.currentUser;
+    let updatedBrandsLogos = brandsLogos;
+    let updatedPreviousWork = previousWork;
+
+    // Only upload if there are new files to upload
+    if (brandsLogos.some((file) => file instanceof File)) {
+      const brandsLogosUrls = await handleFileUploads(
+        brandsLogos,
+        "brandsLogos"
+      );
+      updatedBrandsLogos = [...currentUser.brandsLogos, ...brandsLogosUrls];
+    }
+
+    if (previousWork.some((file) => file instanceof File)) {
+      const previousWorkUrls = await handleFileUploads(
+        previousWork,
+        "previousWork"
+      );
+      updatedPreviousWork = [...currentUser.previousWork, ...previousWorkUrls];
+    }
     let newBrandsLogos = [...(currentUser.brandsLogos || [])];
     let newPreviousWork = [...(currentUser.previousWork || [])];
 

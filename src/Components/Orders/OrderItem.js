@@ -16,7 +16,6 @@ const OrderItem = ({
 }) => {
   const { currentUser } = useContext(AuthContext);
   const { data } = useContext(ChatContext);
-  const [orders, setOrders] = useState([]);
 
   const handleReviewSubmit = async (e, orderId) => {
     e.preventDefault();
