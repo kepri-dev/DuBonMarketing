@@ -26,7 +26,7 @@ function RatesDisplay({ pricingType, toggleModal, updatecount }) {
       }
     };
     fetchPhotoPricing();
-  }, [updatecount]);
+  }, [updatecount, auth.currentUser]);
   return (
     <div className="pricing-plan">
       <div className="pricing-details">

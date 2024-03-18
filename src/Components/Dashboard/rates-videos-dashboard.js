@@ -26,7 +26,7 @@ function RatesVideoDisplay({ pricingType, toggleModal, updatecount }) {
       }
     };
     fetchVideoPricing();
-  }, [updatecount]);
+  }, [updatecount, auth.currentUser]);
 
   return (
     <div className="pricing-plan">
