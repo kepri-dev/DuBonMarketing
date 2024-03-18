@@ -438,7 +438,7 @@
 .delete-previous-work-button {
   position: absolute;
   bottom: 440px;
-  left: 295px;
+  left: 240px;
   background-color: white;
   border-radius: 50%;
   border: none;
@@ -450,12 +450,13 @@
   justify-content: center;
 }
 
-.logos-dash input,
-.media-showcase-section input,
-.media-showcase-section-dash input {
-  border: dashed white;
-  border-radius: 5px;
-  padding: 50px 300px;
+.logos-dash {
+  background-color: rgb(4, 0, 57);
+  color: white;
+}
+
+.logos-dash label,
+.media-showcase-section-dash label {
   color: white;
 }
 

@@ -36,7 +36,14 @@
 .media-showcase-section-dash label {
   color: white;
 }
-
+.logos-dash input,
+.media-showcase-section input,
+.media-showcase-section-dash input {
+  border: dashed white;
+  border-radius: 5px;
+  padding: 50px 200px;
+  color: white;
+}
 .cover-image-container {
   position: relative;
 }

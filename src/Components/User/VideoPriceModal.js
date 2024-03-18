@@ -4,7 +4,7 @@ import { auth, storage, db } from "../../Context/firebase";
 import { updateDoc, doc, getDoc } from "firebase/firestore";
 import InfoTooltip from "../Dashboard/InfoToolTip";
 
-const VideoPriceModal = ({ closeModal }) => {
+const VideoPriceModal = ({ closeModal, onPriceUpdate }) => {
   const defaultFormData = {
     videoOfferName: "Name your offer here",
     minimumVideoQuantity: 1,
@@ -74,7 +74,7 @@ const VideoPriceModal = ({ closeModal }) => {
         await updateDoc(userRef, {
           videoPrice: videoPriceArray,
         });
-        console.log("video Pricing updated successfully");
+        onPriceUpdate(videoPriceArray);
         closeModal(); // Close modal on success
       } catch (error) {
         console.error("Error updating pricing: ", error);

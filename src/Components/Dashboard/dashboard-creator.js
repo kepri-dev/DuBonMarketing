@@ -12,6 +12,7 @@ import UserProfileInfo from "./header-dashboard";
 import CheckboxDashboard from "./checkbox-dashboard";
 import MediaUploadDisplay from "./media-dashboard";
 import RatesDisplay from "./rates-dashboard";
+import RatesVideoDisplay from "./rates-videos-dashboard";
 import InfoTooltip from "./InfoToolTip";
 
 const DashboardCreator = () => {
@@ -33,6 +34,9 @@ const DashboardCreator = () => {
   const [isModalVideoOpen, setModalVideoOpen] = useState(false);
   const devices = ["Phone", "Pro Camera"];
   const [isUploading, setIsUploading] = useState(false);
+  const [photoPricing, setPhotoPricing] = useState({});
+  const [videoPricing, setVideoPricing] = useState({});
+
   const isProfileComplete = currentUser?.profileComplete === true;
 
   const genders = ["Male", "Female"];
@@ -108,7 +112,6 @@ const DashboardCreator = () => {
     return uploadedFilesUrls;
   };
 
-  // Event handler adjustments for coverImg and imgUrl using URL.createObjectURL for immediate preview
   const handleCoverchange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -128,7 +131,6 @@ const DashboardCreator = () => {
     setGender(e.target.value);
   };
 
-  console.log(gender);
   const handleAgeChange = (e) => setAge(e.target.value);
   const handleTagChange = (e) => setTag(e.target.value);
 
@@ -176,9 +178,62 @@ const DashboardCreator = () => {
     setPreviousWork(files);
   };
 
-  const toggleModalPhoto = () => {
-    setModalPhotoOpen(!isModalPhotoOpen);
+  const toggleModalPhoto = () => setModalPhotoOpen(!isModalPhotoOpen);
+
+  const [updateCount, setUpdateCount] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const handleDataUpdated = () => {
+    setUpdateCount((count) => count + 1);
   };
+
+  useEffect(() => {
+    const fetchPhotoPricing = async () => {
+      setIsLoading(true);
+      const user = auth.currentUser;
+      if (user) {
+        const docRef = doc(db, "newusers", user.uid);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists() && docSnap.data().photoPrice) {
+          const photoPriceData = docSnap
+            .data()
+            .photoPrice.reduce((obj, item) => {
+              obj[item.key] = item.value;
+              return obj;
+            }, {});
+          setPhotoPricing(photoPriceData);
+        } else {
+          console.log("No such document!");
+        }
+      }
+      setIsLoading(false);
+    };
+    fetchPhotoPricing();
+  }, [updateCount]);
+
+  useEffect(() => {
+    const fetchVideoPricing = async () => {
+      setIsLoading(true);
+      const user = auth.currentUser;
+      if (user) {
+        const docRef = doc(db, "newusers", user.uid);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists() && docSnap.data().photoPrice) {
+          const videoPricedata = docSnap
+            .data()
+            .videoPrice?.reduce((obj, item) => {
+              obj[item.key] = item.value;
+              return obj;
+            }, {});
+          setVideoPricing(videoPricedata);
+        } else {
+          console.log("No such document!");
+        }
+      }
+      setIsLoading(false);
+    };
+    fetchVideoPricing();
+  }, [updateCount]);
 
   const toggleModalVideo = () => {
     setModalVideoOpen(!isModalVideoOpen);
@@ -355,7 +410,6 @@ const DashboardCreator = () => {
   const handlePreviewProfile = () => {
     navigate(`/profile/${currentUser?.uid}`);
   };
-
   return (
     <div>
       {currentUser &&
@@ -381,134 +435,147 @@ const DashboardCreator = () => {
             </div>
           </div>
         )}
-      <form className="user-profile-container" onSubmit={handleSubmit}>
-        <div className="user-profile-photos">
-          <div className="header-section">
-            <UserProfileInfo
-              currentUser={currentUser}
-              bio={currentUser?.bio}
-              tag={currentUser?.tag}
-              age={currentUser?.age}
-              coverUrl={currentUser?.coverUrl}
-              imgUrl={currentUser?.imgUrl}
-              isUploading={isUploading}
-              onBioChange={handleBioChange}
-              onAgeChange={handleAgeChange}
-              onTagchange={handleTagChange}
-              onCoverChange={handleCoverchange}
-              onImgChange={handleImgChange}
-            />
-            <label className="label-title">
-              Genders
-              <InfoTooltip infoText="Select your gender." />
-            </label>
-            {genders.map((gender, index) => (
-              <label className="checkbox-container-genders" key={index}>
-                <input
-                  type="radio"
-                  name="gender"
-                  value={gender}
-                  onChange={handleGenderChange}
-                  checked={gender === gender}
-                />
-                <span
-                  className={gender === gender ? "checkmark" : "radio-custom"}
-                ></span>
-                {gender}
+      <div className="user-profile-container">
+        <form onSubmit={handleSubmit}>
+          <div className="user-profile-photos">
+            <div className="header-section">
+              <UserProfileInfo
+                currentUser={currentUser}
+                bio={currentUser?.bio}
+                tag={currentUser?.tag}
+                age={currentUser?.age}
+                coverUrl={currentUser?.coverUrl}
+                imgUrl={currentUser?.imgUrl}
+                isUploading={isUploading}
+                onBioChange={handleBioChange}
+                onAgeChange={handleAgeChange}
+                onTagchange={handleTagChange}
+                onCoverChange={handleCoverchange}
+                onImgChange={handleImgChange}
+              />
+              <label className="label-title">
+                Gender
+                <InfoTooltip infoText="Select your gender." />
               </label>
-            ))}
+              {genders.map((gender, index) => (
+                <label className="checkbox-container-genders" key={index}>
+                  <input
+                    type="radio"
+                    name="gender"
+                    value={gender}
+                    onChange={handleGenderChange}
+                    checked={gender === gender}
+                  />
+                  <span
+                    className={gender === gender ? "checkmark" : "radio-custom"}
+                  ></span>
+                  {gender}
+                </label>
+              ))}
 
-            <CheckboxDashboard
-              title={
-                <span>
-                  Camera Type
-                  <InfoTooltip infoText="Select the types of cameras you use." />
-                </span>
-              }
-              options={devices}
-              selectedOptions={device}
-              onChange={handleToggleDevice}
-            />
-            <CheckboxDashboard
-              title={
-                <span>
-                  Country
-                  <InfoTooltip infoText="Select the country you are located in." />
-                </span>
-              }
-              options={countries}
-              selectedOptions={country}
-              onChange={handleToggleCountry}
-            />
-            <CheckboxDashboard
-              title={
-                <span>
-                  Languages
-                  <InfoTooltip infoText="Select the languages you speak." />
-                </span>
-              }
-              options={languages}
-              selectedOptions={language}
-              onChange={handleToggleLanguage}
-            />
-            <CheckboxDashboard
-              title={
-                <span>
-                  Industries
-                  <InfoTooltip infoText="Select the industries you would like to serve." />
-                </span>
-              }
-              options={industries}
-              selectedOptions={industry}
-              onChange={handleToggleIndustry}
+              <CheckboxDashboard
+                title={
+                  <span>
+                    Camera Type
+                    <InfoTooltip infoText="Select the types of cameras you use." />
+                  </span>
+                }
+                options={devices}
+                selectedOptions={device}
+                onChange={handleToggleDevice}
+              />
+              <CheckboxDashboard
+                title={
+                  <span>
+                    Country
+                    <InfoTooltip infoText="Select the country you are located in." />
+                  </span>
+                }
+                options={countries}
+                selectedOptions={country}
+                onChange={handleToggleCountry}
+              />
+              <CheckboxDashboard
+                title={
+                  <span>
+                    Languages
+                    <InfoTooltip infoText="Select the languages you speak." />
+                  </span>
+                }
+                options={languages}
+                selectedOptions={language}
+                onChange={handleToggleLanguage}
+              />
+              <CheckboxDashboard
+                title={
+                  <span>
+                    Industries
+                    <InfoTooltip infoText="Select the industries you would like to serve." />
+                  </span>
+                }
+                options={industries}
+                selectedOptions={industry}
+                onChange={handleToggleIndustry}
+              />
+            </div>
+
+            <MediaUploadDisplay
+              currentUser={currentUser}
+              handleBrandsLogosChange={handleBrandsLogosChange}
+              handlePreviousWorkChange={handlePreviousWorkChange}
+              handleDeleteBrandLogo={handleDeleteBrandLogo}
+              handleDeletePreviousWork={handleDeletePreviousWork}
+              brandsLogos={brandsLogos}
+              previousWork={previousWork}
+              isUploading={isUploading}
             />
           </div>
 
-          <MediaUploadDisplay
-            currentUser={currentUser}
-            handleBrandsLogosChange={handleBrandsLogosChange}
-            handlePreviousWorkChange={handlePreviousWorkChange}
-            handleDeleteBrandLogo={handleDeleteBrandLogo}
-            handleDeletePreviousWork={handleDeletePreviousWork}
-            brandsLogos={brandsLogos}
-            previousWork={previousWork}
-            isUploading={isUploading}
-          />
-        </div>
+          <div className="button-dash">
+            <button
+              className="save-form-dash"
+              type="submit"
+              onClick={handleSubmit}
+            >
+              Save My Profile
+            </button>
+
+            <p>Please save & refresh browser to see the updated fresh look !</p>
+          </div>
+        </form>
         <div className="user-profile-info">
           <h1>Create your rates</h1>
 
           <RatesDisplay
             pricingType="photo"
-            pricingData={currentUser?.photoPrice}
+            pricingData={photoPricing}
             toggleModal={toggleModalPhoto}
+            isLoading={isLoading}
+            updatecount={updateCount}
           />
 
-          <RatesDisplay
+          <RatesVideoDisplay
             pricingType="video"
-            pricingData={currentUser?.videoPrice}
+            pricingData={videoPricing}
             toggleModal={toggleModalVideo}
+            isLoading={isLoading}
+            updatecount={updateCount}
           />
 
           {isModalPhotoOpen && (
-            <PhotoPriceModal closeModal={toggleModalPhoto} />
+            <PhotoPriceModal
+              closeModal={toggleModalPhoto}
+              onPriceUpdate={handleDataUpdated}
+            />
           )}
           {isModalVideoOpen && (
-            <VideoPriceModal closeModal={toggleModalVideo} />
+            <VideoPriceModal
+              closeModal={toggleModalVideo}
+              onPriceUpdate={handleDataUpdated}
+            />
           )}
         </div>{" "}
-        <div className="button-dash">
-          <button
-            className="save-form-dash"
-            type="submit"
-            onClick={handleSubmit}
-          >
-            Save My Profile
-          </button>
-
-          <p>Please save & refresh browser to see the updated fresh look !</p>
-        </div>
-      </form>
+      </div>
       <div className="danger-zone-dash">
         <h1>Danger Zone</h1>
         <button>Delete My Account</button>

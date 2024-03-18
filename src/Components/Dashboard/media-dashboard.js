@@ -1,5 +1,5 @@
 import React from "react";
-
+import "./dashboard-creator.css";
 function MediaUploadDisplay({
   currentUser,
   handleBrandsLogosChange,
@@ -104,18 +104,15 @@ function MediaUploadDisplay({
           )}
         </div>
         {isUploading && <div>Upload in progress, please wait...</div>}{" "}
-        <label htmlFor="previousWork" >
-          {/* Select your files */}
-          <input
-            type="file"
-            name="previousWork"
-            id="previousWork"
-            onChange={(e) =>
-              handleFileChangeWithSizeCheck(e, handlePreviousWorkChange)
-            }
-            multiple
-          />
-        </label>
+        <input
+          type="file"
+          name="previousWork"
+          id="previousWork"
+          onChange={(e) =>
+            handleFileChangeWithSizeCheck(e, handlePreviousWorkChange)
+          }
+          multiple
+        />
         <div className="file-upload-instructions">
           <p>
             Consider using{" "}

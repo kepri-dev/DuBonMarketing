@@ -4,7 +4,7 @@ import { auth, db } from "../../Context/firebase";
 import { updateDoc, doc, getDoc } from "firebase/firestore";
 import InfoTooltip from "../Dashboard/InfoToolTip";
 
-const PhotoPriceModal = ({ closeModal }) => {
+const PhotoPriceModal = ({ closeModal, onPriceUpdate }) => {
   const defaultFormData = {
     photoOfferName: "Name your offer here",
     minimumPhotoQuantity: 1,
@@ -69,7 +69,7 @@ const PhotoPriceModal = ({ closeModal }) => {
         await updateDoc(userRef, {
           photoPrice: photoPriceArray,
         });
-        console.log("Pricing updated successfully");
+        onPriceUpdate(photoPriceArray);  
         closeModal();
       } catch (error) {
         console.error("Error updating pricing: ", error);
