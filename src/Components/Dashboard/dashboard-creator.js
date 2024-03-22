@@ -15,7 +15,6 @@ import PreviousWorkUploadDisplay from "./previousWork-dashboard";
 import RatesDisplay from "./rates-dashboard";
 import RatesVideoDisplay from "./rates-videos-dashboard";
 import InfoTooltip from "./InfoToolTip";
-import { current } from "@reduxjs/toolkit";
 
 const DashboardCreator = () => {
   const navigate = useNavigate();
@@ -38,6 +37,7 @@ const DashboardCreator = () => {
   const [isUploading, setIsUploading] = useState(false);
   const [photoPricing, setPhotoPricing] = useState({});
   const [videoPricing, setVideoPricing] = useState({});
+  const [isFormDirty, setIsFormDirty] = useState(false);
 
   const isProfileComplete = currentUser?.profileComplete === true;
 
@@ -414,9 +414,6 @@ const DashboardCreator = () => {
     }
   }, [navigate]);
 
-  const handlePreviewProfile = () => {
-    navigate(`/profile/${currentUser?.uid}`);
-  };
   return (
     <div>
       {currentUser &&
@@ -434,7 +431,7 @@ const DashboardCreator = () => {
             )}
             <div className="preview-profile">
               <button
-                onClick={() => handlePreviewProfile(currentUser)}
+                onClick={() => navigate(`/profile/${currentUser?.uid}`)}
                 type="button"
               >
                 Preview My Profile
@@ -464,18 +461,21 @@ const DashboardCreator = () => {
                 Gender
                 <InfoTooltip infoText="Select your gender." />
               </label>
-              {genders.map((gender, index) => (
+              {genders.map((genderValue, index) => (
                 <label className="checkbox-container-genders" key={index}>
                   <input
                     type="radio"
                     name="gender"
-                    value={gender}
+                    value={genderValue}
                     onChange={handleGenderChange}
+                    checked={gender === genderValue} // Compare the current gender state with the value of this radio button
                   />
                   <span
-                    className={gender === gender ? "checkmark" : "radio-custom"}
+                    className={
+                      gender === genderValue ? "checkmark" : "radio-custom"
+                    }
                   ></span>
-                  {gender}
+                  {genderValue}
                 </label>
               ))}
 
