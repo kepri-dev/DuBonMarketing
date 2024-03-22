@@ -22,7 +22,16 @@ const OrderItem = ({
     const rating = e.target.rating.value;
     const text = e.target.review.value;
     const businessId = currentUser?.uid;
-    const creatorId = data?.user?.uid;
+    const creatorId = data?.user?.id;
+    console.log("creator ID:", creatorId); // Ensure this is not undefined
+    await leaveReview({
+      chatId: data.chatId,
+      businessId: businessId,
+      creatorId: creatorId, // This is coming as undefined
+      rating,
+      text,
+    });
+
     try {
       // Leave a review
       await leaveReview({

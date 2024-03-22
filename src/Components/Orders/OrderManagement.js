@@ -15,7 +15,6 @@ const OrderManagement = ({ chatId }) => {
   const [isOpen, setIsOpen] = useState({});
   const [isCreator, setIsCreator] = useState(false);
   const [isBusiness, setIsBusiness] = useState(false);
-  const [orderStatus, setOrderStatus] = useState(orders?.status);
 
   useEffect(() => {
     setLoading(true); // Ensure loading state is true when starting a new fetch
