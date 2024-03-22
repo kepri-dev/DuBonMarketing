@@ -19,7 +19,7 @@
 .logos-dash,
 .user-generated-content-section {
   position: relative;
-  max-width: 800px;
+  width: 800px;
   margin: 20px auto;
   background-color: white;
   border-radius: 10px;

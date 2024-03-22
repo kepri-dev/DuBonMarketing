@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import "./dashboard-creator.css";
 import { updateDoc, doc, getDoc } from "firebase/firestore";
@@ -10,10 +10,12 @@ import PhotoPriceModal from "../User/PhotoPriceModal";
 import VideoPriceModal from "../User/VideoPriceModal";
 import UserProfileInfo from "./header-dashboard";
 import CheckboxDashboard from "./checkbox-dashboard";
-import MediaUploadDisplay from "./media-dashboard";
+import LogoUploadDisplay from "./logo-dashboard";
+import PreviousWorkUploadDisplay from "./previousWork-dashboard";
 import RatesDisplay from "./rates-dashboard";
 import RatesVideoDisplay from "./rates-videos-dashboard";
 import InfoTooltip from "./InfoToolTip";
+import { current } from "@reduxjs/toolkit";
 
 const DashboardCreator = () => {
   const navigate = useNavigate();
@@ -78,6 +80,10 @@ const DashboardCreator = () => {
       setIndustry(currentUser.industry || []);
       setDevice(currentUser.device || []);
       setCountry(currentUser.country || []);
+      setImgUrl(currentUser.imgUrl || null);
+      setCoverUrl(currentUser.coverUrl || null);
+      setBrandsLogos(currentUser.brandsLogos || []);
+      setPreviousWork(currentUser.previousWork || []);
     }
   }, [currentUser]);
 
@@ -97,38 +103,151 @@ const DashboardCreator = () => {
     }
   }, [currentUser?.uid]);
 
-  const handleFileUploads = async (files, storagePath) => {
-    setIsUploading(true);
-    const validFiles = files.filter(
-      (file) => file instanceof File && file.size > 0
-    );
-    const uploadPromises = validFiles.map(async (file) => {
-      const fileRef = ref(storage, `${storagePath}/${v4()}`);
-      const snapshot = await uploadBytes(fileRef, file);
-      return await getDownloadURL(snapshot.ref);
-    });
-    const uploadedFilesUrls = await Promise.all(uploadPromises);
-    setIsUploading(false);
-    return uploadedFilesUrls;
-  };
-
-  const handleCoverchange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setCoverUrl(URL.createObjectURL(file));
+  const handleImageUpload = async (file) => {
+    if (!file) {
+      alert("No file selected for upload");
+      return;
+    }
+    const imgRef = ref(storage, `profilePictures/${currentUser.uid}/${v4()}`);
+    try {
+      const imgPicSnapshot = await uploadBytes(imgRef, file);
+      const imgUrlDownload = await getDownloadURL(imgPicSnapshot.ref);
+      setImgUrl(imgUrlDownload);
+    } catch (error) {
+      console.error("Error uploading file: ", error);
+      alert("Failed to upload image");
     }
   };
 
-  const handleImgChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setImgUrl(URL.createObjectURL(file));
+  const handleCoverUpload = async (file) => {
+    if (!file) {
+      alert("No file selected for upload");
+      return;
+    }
+    const imgRef = ref(storage, `coverPictures/${currentUser.uid}/${v4()}`);
+    try {
+      const imgPicSnapshot = await uploadBytes(imgRef, file);
+      const imgUrlDownload = await getDownloadURL(imgPicSnapshot.ref);
+      setCoverUrl(imgUrlDownload);
+    } catch (error) {
+      console.error("Error uploading file: ", error);
+      alert("Failed to upload image");
+    }
+  };
+
+  const handleBrandsLogosUpload = async (files) => {
+    const filesArray = Array.from(files); // Convert FileList to Array
+    if (filesArray.length === 0) {
+      alert("No files selected for upload");
+      return;
+    }
+
+    setIsUploading(true); // Assuming you have a state to track upload status
+
+    const uploadedUrls = await Promise.all(
+      filesArray.map(async (file) => {
+        const imgRef = ref(storage, `brandsLogos/${currentUser.uid}/${v4()}`);
+        try {
+          const imgPicSnapshot = await uploadBytes(imgRef, file);
+          const imgUrlDownload = await getDownloadURL(imgPicSnapshot.ref);
+          return imgUrlDownload;
+        } catch (error) {
+          console.error("Error uploading file: ", error);
+          alert("Failed to upload image");
+          return null; // Return null for any failed uploads
+        }
+      })
+    );
+
+    // Filter out any null values in case some uploads failed
+    const successfulUploads = uploadedUrls.filter((url) => url !== null);
+
+    setBrandsLogos((prevUrls) => [...prevUrls, ...successfulUploads]); // Assuming you have a state to store URLs
+    const updatedUser = {
+      ...currentUser,
+      brandsLogos: [...currentUser.previousWork, ...successfulUploads],
+    };
+
+    updateUserInContext(updatedUser);
+    setIsUploading(false);
+  };
+
+  const handlePreviousWorkUpload = async (files) => {
+    const filesArray = Array.from(files); // Convert FileList to Array
+    if (filesArray.length === 0) {
+      alert("No files selected for upload");
+      return;
+    }
+
+    setIsUploading(true); // Assuming you have a state to track upload status
+
+    const uploadedUrls = await Promise.all(
+      filesArray.map(async (file) => {
+        const imgRef = ref(storage, `previousWork/${currentUser.uid}/${v4()}`);
+        try {
+          const imgPicSnapshot = await uploadBytes(imgRef, file);
+          const imgUrlDownload = await getDownloadURL(imgPicSnapshot.ref);
+          return imgUrlDownload;
+        } catch (error) {
+          console.error("Error uploading file: ", error);
+          alert("Failed to upload image");
+          return null; // Return null for any failed uploads
+        }
+      })
+    );
+
+    // Filter out any null values in case some uploads failed
+    const successfulUploads = uploadedUrls.filter((url) => url !== null);
+
+    setPreviousWork((prevUrls) => [...prevUrls, ...successfulUploads]); // Assuming you have a state to store URLs
+    const updatedUser = {
+      ...currentUser,
+      previousWork: [...currentUser.previousWork, ...successfulUploads],
+    };
+
+    updateUserInContext(updatedUser);
+    setIsUploading(false);
+  };
+
+  const handleDeleteBrandLogo = async (index, event) => {
+    event.stopPropagation();
+    const updatedLogos = [...currentUser.brandsLogos];
+    updatedLogos.splice(index, 1);
+
+    try {
+      const userRef = doc(db, "newusers", currentUser.uid);
+      await updateDoc(userRef, {
+        brandsLogos: updatedLogos,
+      });
+
+      // After successful Firebase update, update local state
+      updateUserInContext({ ...currentUser, brandsLogos: updatedLogos });
+    } catch (error) {
+      console.error("Error updating logos: ", error);
+    }
+  };
+
+  const handleDeletePreviousWork = async (index) => {
+    const updatedWork = [...currentUser.previousWork];
+    updatedWork.splice(index, 1);
+
+    try {
+      const userRef = doc(db, "newusers", currentUser.uid);
+      await updateDoc(userRef, {
+        previousWork: updatedWork,
+      });
+
+      // After successful Firebase update, update local state
+      updateUserInContext({ ...currentUser, previousWork: updatedWork });
+    } catch (error) {
+      console.error("Error updating previous work: ", error);
     }
   };
 
   const handleBioChange = (e) => setBio(e.target.value);
   const handleGenderChange = (e) => {
     setGender(e.target.value);
+    console.log("gender selected is", e.target.value);
   };
 
   const handleAgeChange = (e) => setAge(e.target.value);
@@ -166,16 +285,6 @@ const DashboardCreator = () => {
         ? prev.filter((item) => item !== option)
         : [...prev, option]
     );
-  };
-
-  const handleBrandsLogosChange = (e) => {
-    const files = Array.from(e.target.files);
-    setBrandsLogos(files);
-  };
-
-  const handlePreviousWorkChange = (e) => {
-    const files = Array.from(e.target.files);
-    setPreviousWork(files);
   };
 
   const toggleModalPhoto = () => setModalPhotoOpen(!isModalPhotoOpen);
@@ -239,104 +348,13 @@ const DashboardCreator = () => {
     setModalVideoOpen(!isModalVideoOpen);
   };
 
-  const handleDeleteBrandLogo = async (index, event) => {
-    event.stopPropagation();
-    const updatedLogos = [...currentUser.brandsLogos];
-    updatedLogos.splice(index, 1);
-
-    try {
-      const userRef = doc(db, "newusers", currentUser.uid);
-      await updateDoc(userRef, {
-        brandsLogos: updatedLogos,
-      });
-
-      // After successful Firebase update, update local state
-      updateUserInContext({ ...currentUser, brandsLogos: updatedLogos });
-    } catch (error) {
-      console.error("Error updating logos: ", error);
-    }
-  };
-
-  const handleDeletePreviousWork = async (index) => {
-    const updatedWork = [...currentUser.previousWork];
-    updatedWork.splice(index, 1);
-
-    try {
-      const userRef = doc(db, "newusers", currentUser.uid);
-      await updateDoc(userRef, {
-        previousWork: updatedWork,
-      });
-
-      // After successful Firebase update, update local state
-      updateUserInContext({ ...currentUser, previousWork: updatedWork });
-    } catch (error) {
-      console.error("Error updating previous work: ", error);
-    }
-  };
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!currentUser) return;
 
     const user = auth.currentUser;
-    let updatedBrandsLogos = brandsLogos;
-    let updatedPreviousWork = previousWork;
-
-    // Only upload if there are new files to upload
-    if (brandsLogos.some((file) => file instanceof File)) {
-      const brandsLogosUrls = await handleFileUploads(
-        brandsLogos,
-        "brandsLogos"
-      );
-      updatedBrandsLogos = [...currentUser.brandsLogos, ...brandsLogosUrls];
-    }
-
-    if (previousWork.some((file) => file instanceof File)) {
-      const previousWorkUrls = await handleFileUploads(
-        previousWork,
-        "previousWork"
-      );
-      updatedPreviousWork = [...currentUser.previousWork, ...previousWorkUrls];
-    }
-    let newBrandsLogos = [...(currentUser.brandsLogos || [])];
-    let newPreviousWork = [...(currentUser.previousWork || [])];
 
     if (user) {
-      if (brandsLogos.length > 0) {
-        newBrandsLogos = await handleFileUploads(
-          brandsLogos,
-          "brandsLogos",
-          currentUser.brandsLogos || []
-        );
-        setIsUploading(true);
-      }
-
-      if (previousWork.length > 0) {
-        newPreviousWork = await handleFileUploads(
-          previousWork,
-          "previousWork",
-          currentUser.previousWork || []
-        );
-        setIsUploading(true);
-      }
-
-      const coverRef = ref(storage, `coverPictures/${v4()}`);
-      let coverUrlDownload;
-      if (coverUrl) {
-        const coverPicSnapshot = await uploadBytes(coverRef, coverUrl);
-        coverUrlDownload = await getDownloadURL(coverPicSnapshot.ref);
-        setCoverUrl(coverUrlDownload);
-        setIsUploading(true);
-      }
-
-      const imgRef = ref(storage, `profilePictures/${v4()}`);
-      let imgUrlDownload;
-      if (imgUrl) {
-        const imgPicSnapshot = await uploadBytes(imgRef, imgUrl);
-        imgUrlDownload = await getDownloadURL(imgPicSnapshot.ref);
-        setImgUrl(imgUrlDownload);
-        setIsUploading(true);
-      }
-
       const userRef = doc(db, "newusers", user.uid);
       const docSnapshot = await getDoc(userRef);
       const userData = docSnapshot.data();
@@ -356,6 +374,8 @@ const DashboardCreator = () => {
         hasVideoPricing;
       try {
         const updateData = {
+          coverUrl: coverUrl,
+          imgUrl: imgUrl,
           age,
           bio,
           gender,
@@ -364,31 +384,18 @@ const DashboardCreator = () => {
           device,
           tag,
           country,
-          brandsLogos: newBrandsLogos,
-          previousWork: newPreviousWork,
+          brandsLogos: brandsLogos,
+          previousWork: previousWork,
           profileComplete: isProfileComplete,
         };
-        if (coverUrlDownload) {
-          updateData.coverUrl = coverUrlDownload;
-        }
-
-        if (imgUrlDownload) {
-          updateData.imgUrl = imgUrlDownload;
-        }
 
         await updateDoc(userRef, updateData);
         alert("Profile updated successfully!");
-        if (brandsLogos.length > 0) {
-          setBrandsLogos(newBrandsLogos);
-        }
-        if (previousWork.length > 0) {
-          setPreviousWork(newPreviousWork);
-        }
+
         updateUserInContext({
           ...currentUser,
 
-          coverUrl: coverUrlDownload || currentUser.coverUrl,
-          imgUrl: imgUrlDownload || currentUser.imgUrl,
+          updateData,
         });
       } catch (error) {
         console.error("Error updating document: ", error);
@@ -444,14 +451,14 @@ const DashboardCreator = () => {
                 bio={currentUser?.bio}
                 tag={currentUser?.tag}
                 age={currentUser?.age}
-                coverUrl={currentUser?.coverUrl}
-                imgUrl={currentUser?.imgUrl}
+                coverUrl={coverUrl || currentUser?.coverUrl}
+                imgUrl={imgUrl || currentUser?.imgUrl}
                 isUploading={isUploading}
                 onBioChange={handleBioChange}
                 onAgeChange={handleAgeChange}
                 onTagchange={handleTagChange}
-                onCoverChange={handleCoverchange}
-                onImgChange={handleImgChange}
+                handleCoverUpload={handleCoverUpload}
+                handleImageUpload={handleImageUpload}
               />
               <label className="label-title">
                 Gender
@@ -464,7 +471,6 @@ const DashboardCreator = () => {
                     name="gender"
                     value={gender}
                     onChange={handleGenderChange}
-                    checked={gender === gender}
                   />
                   <span
                     className={gender === gender ? "checkmark" : "radio-custom"}
@@ -518,15 +524,18 @@ const DashboardCreator = () => {
                 onChange={handleToggleIndustry}
               />
             </div>
-
-            <MediaUploadDisplay
+            <LogoUploadDisplay
               currentUser={currentUser}
-              handleBrandsLogosChange={handleBrandsLogosChange}
-              handlePreviousWorkChange={handlePreviousWorkChange}
+              handleBrandsLogosUpload={handleBrandsLogosUpload}
               handleDeleteBrandLogo={handleDeleteBrandLogo}
-              handleDeletePreviousWork={handleDeletePreviousWork}
               brandsLogos={brandsLogos}
+              isUploading={isUploading}
+            />
+            <PreviousWorkUploadDisplay
+              currentUser={currentUser}
+              handlePreviousWorkUpload={handlePreviousWorkUpload}
               previousWork={previousWork}
+              handleDeletePreviousWork={handleDeletePreviousWork}
               isUploading={isUploading}
             />
           </div>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import "./dashboard-creator.css";
@@ -7,23 +7,19 @@ function UserProfileInfo({
   currentUser,
   onTagchange,
   onBioChange,
-  handleGenderChange,
   onAgeChange,
-  onCoverChange,
-  onImgChange,
+  handleCoverUpload,
+  handleImageUpload,
   isUploading,
   coverUrl,
   imgUrl,
-  title,
-  gender,
 }) {
-  const genders = ["Male", "Female"];
   return (
     <div>
       <div className="cover-image-container">
         <img
           className="coverImg-dash"
-          src={coverUrl || currentUser.coverUrl} // Use updated coverUrl from props or context
+          src={coverUrl || currentUser.coverUrl}
           alt={`${currentUser?.userName}'s cover`}
         />
         <label htmlFor="coverUrl" className="file-upload-button">
@@ -32,8 +28,9 @@ function UserProfileInfo({
             type="file"
             id="coverUrl"
             name="coverUrl"
-            onChange={onCoverChange}
+            onChange={(e) => handleCoverUpload(e.target.files[0])}
             className="cover-file-input"
+            accept="image/*"
           />
         </label>
         {isUploading && <div>Upload in progress, please wait...</div>}
@@ -54,8 +51,9 @@ function UserProfileInfo({
               type="file"
               id="imgUrl"
               name="imgUrl"
-              onChange={onImgChange}
               className="cover-file-input"
+              onChange={(e) => handleImageUpload(e.target.files[0])}
+              accept="image/*"
             />
           </label>
         </div>
@@ -91,29 +89,6 @@ function UserProfileInfo({
           className="bio-textarea"
         />
       </div>
-      {/* <div className="gender-selection">
-      <label className="label-title">Genders</label>
-
-        {genders.map((genderOption, index) => (
-          <label className="checkbox-container-genders" key={index}>
-            <input
-              type="radio"
-              name="gender"
-              value={genderOption}
-              onChange={handleGenderChange}
-              checked={currentUser.gender === genderOption}
-            />
-            <span
-              className={
-                currentUser.gender === genderOption
-                  ? "checkmark"
-                  : "radio-custom"
-              }
-            ></span>
-            {genderOption}
-          </label>
-        ))}
-      </div> */}
       <label className="label-title-header">Age</label>{" "}
       <input
         className="number"

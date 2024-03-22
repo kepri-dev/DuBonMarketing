@@ -1,13 +1,9 @@
 import React from "react";
 import "./dashboard-creator.css";
-function MediaUploadDisplay({
+function LogoUploadDisplay({
   currentUser,
-  handleBrandsLogosChange,
-  handlePreviousWorkChange,
-  brandsLogos,
-  previousWork,
+  handleBrandsLogosUpload,
   handleDeleteBrandLogo,
-  handleDeletePreviousWork,
   isUploading,
 }) {
   const handleFileChangeWithSizeCheck = (event, originalHandler) => {
@@ -57,61 +53,10 @@ function MediaUploadDisplay({
         <input
           type="file"
           name="brandsLogos"
-          onChange={(e) =>
-            handleFileChangeWithSizeCheck(e, handleBrandsLogosChange)
-          }
+          onChange={(e) => handleBrandsLogosUpload(e.target.files)}
+          className="file-input"
           multiple
-        />
-        <div className="file-upload-instructions">
-          <p>
-            Consider using{" "}
-            <a
-              href="https://tinypng.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              TinyPNG
-            </a>{" "}
-            to reduce the size of your PNG files.
-          </p>
-        </div>
-      </div>
-      <div className="media-showcase-section-dash">
-        <label className="label-title">Previous Work </label>
-        <div className="previous-work-slide">
-          {currentUser &&
-          currentUser.previousWork &&
-          currentUser.previousWork.length > 0 ? (
-            currentUser.previousWork.map((workData, index) => {
-              const workUrl =
-                typeof workData === "string" ? workData : workData.url;
-              return (
-                <div key={index} className="previous-work-container">
-                  <img src={workUrl} alt={`Previous work ${index + 1}`} />
-                  <button
-                    type="button"
-                    className="delete-previous-work-button"
-                    onClick={() => handleDeletePreviousWork(index)}
-                    aria-label="Delete work"
-                  >
-                    ×
-                  </button>
-                </div>
-              );
-            })
-          ) : (
-            <p>What about your work? Show the people what that face do!</p>
-          )}
-        </div>
-        {isUploading && <div>Upload in progress, please wait...</div>}{" "}
-        <input
-          type="file"
-          name="previousWork"
-          id="previousWork"
-          onChange={(e) =>
-            handleFileChangeWithSizeCheck(e, handlePreviousWorkChange)
-          }
-          multiple
+          accept="image/*,video/*"
         />
         <div className="file-upload-instructions">
           <p>
@@ -131,4 +76,4 @@ function MediaUploadDisplay({
   );
 }
 
-export default MediaUploadDisplay;
+export default LogoUploadDisplay;
