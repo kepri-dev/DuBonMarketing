@@ -29,7 +29,7 @@ const ChatContainer = () => {
           {data && data.chatId ? (
             <>
               <div>
-                <ConversationHeader data={data} />
+                <ConversationHeader data={data} currentUser={currentUser} />
               </div>
               <div className="messagesArea">
                 <Messages />
@@ -54,7 +54,14 @@ const ChatContainer = () => {
           {data && data.chatId ? (
             <OrderManagement chatId={data.chatId} />
           ) : (
-            <div>Select a conversation to manage orders.</div>
+            <div className="conversationArea-div">
+              <FontAwesomeIcon
+                icon={faInbox}
+                size="xl"
+                style={{ color: "#040039" }}
+              />
+              <p> Please select a conversation to manage orders.</p>
+            </div>
           )}
         </div>
       </div>

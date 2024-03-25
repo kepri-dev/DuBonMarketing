@@ -16,7 +16,7 @@ import { useNavigate } from "react-router-dom";
 
 function OrdersList({}) {
   const { currentUser } = useContext(AuthContext);
-  const { dispatch } = useContext(ChatContext);
+  const { data, dispatch } = useContext(ChatContext);
 
   const statusColors = {
     pending: "grey",
@@ -38,15 +38,41 @@ function OrdersList({}) {
 
   const navigate = useNavigate();
 
-  const handleOrderSelect = (order) => {
-    dispatch({
-      type: "CHANGE_CONVERSATION",
-      payload: {
-        chatId: order.chatId,
-        user: order.otherUser,
-      },
-    });
-    navigate(`/messages/${order.chatId}`);
+  const fetchOrderDetails = async (orderId) => {
+    try {
+      const orderDetailsRef = doc(db, "orders", orderId);
+
+      const docSnapshot = await getDoc(orderDetailsRef);
+
+      if (!docSnapshot.exists()) {
+        throw new Error(`No details found for order ID: ${orderId}`);
+      }
+
+      return docSnapshot.data();
+    } catch (error) {
+      console.error("Error fetching order details:", error);
+    }
+  };
+
+  const handleOrderSelect = async (orderId) => {
+    try {
+      const orderDetails = await fetchOrderDetails(orderId);
+
+      const enrichedOrder = {
+        ...orderId,
+      };
+      console.log(enrichedOrder);
+      dispatch({
+        type: "CHANGE_CONVERSATION",
+        payload: {
+          chatId: enrichedOrder.chatId,
+          user: enrichedOrder.otherUser,
+        },
+      });
+      navigate(`/messages/${enrichedOrder.chatId}`);
+    } catch (error) {
+      console.error("Failed to fetch order details:", error);
+    }
   };
 
   useEffect(() => {

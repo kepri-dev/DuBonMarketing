@@ -87,12 +87,6 @@ const Conversations = () => {
   }, [conversationId, conversations]);
 
   const handleConversationSelect = (conversation) => {
-    const isCurrentUserSender = conversation.sender?.uid === currentUser.uid;
-
-    const otherUser = isCurrentUserSender
-      ? conversation.recipient
-      : conversation.sender;
-
     dispatch({
       type: "CHANGE_CONVERSATION",
       payload: {

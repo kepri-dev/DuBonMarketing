@@ -46,24 +46,24 @@ const Messages = ({ userId, user }) => {
         }
       });
 
-      const userDocRef = doc(db, "newusers", currentUser.uid);
-      const unSubUser = onSnapshot(userDocRef, (docSnapshot) => {
-        if (docSnapshot.exists()) {
-          dispatch({
-            type: "UPDATE_USER_DATA",
-            payload: {
-              ...docSnapshot.data(),
-              uid: currentUser.uid,
-            },
-          });
-        } else {
-          console.error("User document not found:", currentUser.uid);
-        }
-      });
+      // const userDocRef = doc(db, "newusers", currentUser.uid);
+      // const unSubUser = onSnapshot(userDocRef, (docSnapshot) => {
+      //   if (docSnapshot.exists()) {
+      //     dispatch({
+      //       type: "UPDATE_USER_DATA",
+      //       payload: {
+      //         ...docSnapshot.data(),
+      //         uid: currentUser.uid,
+      //       },
+      //     });
+      //   } else {
+      //     console.error("User document not found. UID:", currentUser.uid);
+      //   }
+      // });
 
       return () => {
         unSubChat();
-        unSubUser();
+        // unSubUser();
       };
     }
   }, [chatId, currentUser?.uid, dispatch]);
