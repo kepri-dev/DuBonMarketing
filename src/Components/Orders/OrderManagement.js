@@ -1,70 +1,64 @@
 import React, { useState, useEffect, useContext } from "react";
 import { db } from "../../Context/firebase";
 import { AuthContext } from "../../Context/AuthContext";
-import { ChatContext } from "../../Context/ChatContext";
-import { collection, query, where, getDocs, doc } from "firebase/firestore";
+import { collection, query, where, onSnapshot } from "firebase/firestore";
 import "./orders.css";
 import { updateOrderStatus } from "./OrderFunctions";
 import OrderItem from "./OrderItem";
 
 const OrderManagement = ({ chatId }) => {
   const { currentUser } = useContext(AuthContext);
-  const { data } = useContext(ChatContext);
   const [orders, setOrders] = useState([]);
-  const [loading, setLoading] = useState(true); // Added loading state
+  const [loading, setLoading] = useState(true);
   const [isOpen, setIsOpen] = useState({});
   const [isCreator, setIsCreator] = useState(false);
   const [isBusiness, setIsBusiness] = useState(false);
 
   useEffect(() => {
-    setLoading(true); // Ensure loading state is true when starting a new fetch
-    setOrders([]); // Reset orders state
-    const fetchOrder = async () => {
-      try {
-        const ordersRef = collection(db, "orders");
-        const q = query(ordersRef, where("chatId", "==", chatId));
-        const querySnapshot = await getDocs(q);
+    if (!chatId) return;
 
+    setLoading(true);
+
+    const ordersRef = collection(db, "orders");
+    const q = query(ordersRef, where("chatId", "==", chatId));
+
+    const unsubscribe = onSnapshot(
+      q,
+      (querySnapshot) => {
         const ordersData = querySnapshot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
         }));
 
         if (ordersData.length > 0) {
-          // Now ordersData is an array of orders
-          console.log("Orders found:", ordersData);
-          setOrders(ordersData); // Assuming setOrders is designed to handle an array of orders
+          setOrders(ordersData);
           const newIsOpen = ordersData.reduce((acc, order) => {
-            acc[order.id] = false; // Initialize all as closed
+            acc[order.id] = false;
             return acc;
           }, {});
           setIsOpen(newIsOpen);
-          // Check if the current user is the creator of any of these orders
+
           const isCreatorOfAnyOrder = ordersData.some(
             (order) => currentUser?.uid === order.creatorId
           );
           setIsCreator(isCreatorOfAnyOrder);
+
           const isBusinessOfAnyOrder = ordersData.some(
             (order) => currentUser?.uid === order.businessId
           );
           setIsBusiness(isBusinessOfAnyOrder);
         } else {
-          console.log("No such order!");
+          setOrders([]);
         }
-      } catch (error) {
-        console.error("Error fetching order:", error);
-      } finally {
+        setLoading(false);
+      },
+      (error) => {
+        console.error("Error fetching orders:", error);
         setLoading(false);
       }
-    };
+    );
 
-    if (chatId) {
-      fetchOrder();
-    } else {
-      console.log("No chatId provided");
-      setLoading(false);
-      setOrders([]);
-    }
+    return () => unsubscribe();
   }, [chatId, currentUser]);
 
   const toggleOpen = (orderId) => {
@@ -75,7 +69,6 @@ const OrderManagement = ({ chatId }) => {
     try {
       await updateOrderStatus(orderId, newStatus);
       alert(`Order ${newStatus}.`);
-      // Update the specific order's status in state
       setOrders((prevOrders) =>
         prevOrders.map((order) =>
           order.id === orderId ? { ...order, status: newStatus } : order
@@ -91,7 +84,6 @@ const OrderManagement = ({ chatId }) => {
     try {
       await updateOrderStatus(orderId, newStatus);
       alert(`Order ${newStatus}.`);
-      // Update the specific order's status in state
       setOrders((prevOrders) =>
         prevOrders.map((order) =>
           order.id === orderId ? { ...order, status: newStatus } : order
@@ -107,7 +99,6 @@ const OrderManagement = ({ chatId }) => {
     try {
       await updateOrderStatus(orderId, newStatus);
       alert(`Order ${newStatus}.`);
-      // Update the specific order's status in state
       setOrders((prevOrders) =>
         prevOrders.map((order) =>
           order.id === orderId ? { ...order, status: newStatus } : order
@@ -123,7 +114,6 @@ const OrderManagement = ({ chatId }) => {
     try {
       await updateOrderStatus(orderId, newStatus);
       alert(`Order ${newStatus}.`);
-      // Update the specific order's status in state
       setOrders((prevOrders) =>
         prevOrders.map((order) =>
           order.id === orderId ? { ...order, status: newStatus } : order
@@ -135,7 +125,6 @@ const OrderManagement = ({ chatId }) => {
     }
   };
 
-
   if (loading) return <div>Loading order details...</div>;
 
   return (
@@ -143,7 +132,7 @@ const OrderManagement = ({ chatId }) => {
       <h3>Order History</h3>
       {orders && orders.length > 0 ? (
         orders
-          .sort((a, b) => b.createdAt - a.createdAt) // Sorting orders in descending order by createdAt
+          .sort((a, b) => b.createdAt - a.createdAt)
           .map((order) => (
             <OrderItem
               key={order.id}

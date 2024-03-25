@@ -22,7 +22,7 @@ function OrdersList({}) {
     pending: "grey",
     rejected: "red",
     accepted: "lightblue",
-    completed: "blue",
+    confirmed: "blue",
     delivered: "green",
     "order-closed": "black",
   };
@@ -31,7 +31,7 @@ function OrdersList({}) {
     pending: [],
     rejected: [],
     accepted: [],
-    completed: [],
+    confirmed: [],
     delivered: [],
     "order-closed": [],
   });
@@ -66,7 +66,7 @@ function OrdersList({}) {
         pending: [],
         rejected: [],
         accepted: [],
-        completed: [],
+        confirmed: [],
         delivered: [],
         "order-closed": [],
       };
@@ -141,8 +141,8 @@ function OrdersList({}) {
                     height: "50px",
                   }}
                 />
-                <div>
-                  <h4>{order.otherUser.userName}</h4>
+                <div className="orderDetails">
+                  <h4 className="orderValue">{order.otherUser.userName}</h4>
                   <p>
                     <span className="orderKey">Budget:</span>{" "}
                     <span className="orderValue">
@@ -153,6 +153,7 @@ function OrdersList({}) {
                               .toUpperCase()
                           : "N/A"
                         : "N/A"}
+                      $
                     </span>
                   </p>
                 </div>
