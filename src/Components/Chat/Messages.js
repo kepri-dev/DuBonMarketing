@@ -9,6 +9,7 @@ import { AuthContext } from "../../Context/AuthContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faComments } from "@fortawesome/free-solid-svg-icons";
 import { useParams } from "react-router-dom";
+import ConversationHeader from "./ConversationHeader";
 
 const Messages = ({ userId, user }) => {
   const navigate = useNavigate();
@@ -69,13 +70,6 @@ const Messages = ({ userId, user }) => {
 
   return (
     <div>
-      <div className="conversationHeader">
-        <img src={data.user?.imgUrl} alt="Profile" />
-        <span>{data.user?.userName}</span>
-        <button onClick={() => navigate(`/profile/${data.user?.uid}`)}>
-          View Profile
-        </button>
-      </div>
       <div className="messagesContainer">
         {messages.length > 0 ? (
           messages.map((m) => (

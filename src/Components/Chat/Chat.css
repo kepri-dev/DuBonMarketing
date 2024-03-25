@@ -58,8 +58,10 @@
 
 .conversations {
   flex: 1;
-  overflow-y: auto;
+  overflow-y: scroll;
+  overflow-x: auto;
   padding: 10px;
+  max-height: 75vh;
 }
 
 .conversationItem {

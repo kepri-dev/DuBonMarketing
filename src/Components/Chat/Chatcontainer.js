@@ -10,11 +10,12 @@ import "./Chat.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faInbox } from "@fortawesome/free-solid-svg-icons";
 import { AuthContext } from "../../Context/AuthContext";
+import Sidebar from "./Sidebar";
+import ConversationHeader from "./ConversationHeader";
 
 const ChatContainer = () => {
   const { data } = useContext(ChatContext);
   const { currentUser } = useContext(AuthContext);
- 
 
   return (
     <div className="chatLayout">
@@ -22,11 +23,14 @@ const ChatContainer = () => {
         <div className="searchAndConversations">
           <StartConversation />
 
-          <Conversations />
+          <Sidebar />
         </div>
         <div className="conversationArea">
           {data && data.chatId ? (
             <>
+              <div>
+                <ConversationHeader data={data} />
+              </div>
               <div className="messagesArea">
                 <Messages />
               </div>

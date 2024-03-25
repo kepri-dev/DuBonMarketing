@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import { db } from "../../Context/firebase";
 import { AuthContext } from "../../Context/AuthContext";
 import { ChatContext } from "../../Context/ChatContext";
@@ -11,12 +11,14 @@ import {
   getDoc,
   setDoc,
 } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
 
 const StartConversation = () => {
   const { currentUser } = useContext(AuthContext);
   const { dispatch } = useContext(ChatContext);
   const [searchedUsers, setSearchedUsers] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const navigate = useNavigate();
 
   const fetchUsers = async (searchTerm) => {
     const lowerCaseSearchTerm = searchTerm.toLowerCase();
@@ -106,6 +108,7 @@ const StartConversation = () => {
         } else {
           console.log("Chat document already exists in Firestore");
         }
+        navigate(`/messages/${newChatId}`);
       })
       .catch((error) => {
         console.error("Error checking chat document:", error);

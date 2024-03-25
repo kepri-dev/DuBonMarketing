@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useRef } from "react";
 import { db } from "../../Context/firebase";
 import { AuthContext } from "../../Context/AuthContext";
 import { ChatContext } from "../../Context/ChatContext";
@@ -11,6 +11,7 @@ import {
   getDoc,
   doc,
 } from "firebase/firestore";
+import { useParams } from "react-router-dom";
 
 const Conversations = () => {
   const { currentUser } = useContext(AuthContext);
@@ -18,12 +19,25 @@ const Conversations = () => {
   const [conversations, setConversations] = useState([]);
   const navigate = useNavigate();
   const [activeConversationId, setActiveConversationId] = useState(null);
+  const { conversationId } = useParams();
+  const conversationRefs = useRef({});
+
+  useEffect(() => {
+    if (
+      activeConversationId &&
+      conversationRefs.current[activeConversationId]
+    ) {
+      conversationRefs.current[activeConversationId].scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+    }
+  }, [activeConversationId, conversations]);
 
   const defaultProfilePic =
     "https://firebasestorage.googleapis.com/v0/b/test-firebase-9badc.appspot.com/o/mockProfilePic%2FDALL%C2%B7E%202024-02-26%2018.11.43%20-%20Create%20a%20gender-neutral%20and%20featureless%20default%20profile%20picture%20representing%20a%20silhouette%20of%20a%20face%20and%20upper%20torso.%20Use%20abstract%20shapes%20like%20circles%20%20(1).png?alt=media&token=a71bd835-6b0a-41c6-9fae-f4f201c28ff2";
 
   const getUserDetails = async (userId) => {
-    
     let userDocSnap = await getDoc(doc(db, "newusers", userId));
     if (!userDocSnap.exists()) {
       userDocSnap = await getDoc(doc(db, "business", userId));
@@ -66,6 +80,11 @@ const Conversations = () => {
 
     return () => unsubscribe();
   }, [currentUser?.uid]);
+
+  useEffect(() => {
+    // This ensures the active conversation is highlighted based on the URL.
+    setActiveConversationId(conversationId);
+  }, [conversationId, conversations]);
 
   const handleConversationSelect = (conversation) => {
     const isCurrentUserSender = conversation.sender?.uid === currentUser.uid;
@@ -112,6 +131,7 @@ const Conversations = () => {
             return (
               <div
                 key={conversation.id}
+                ref={(el) => (conversationRefs.current[conversation.id] = el)}
                 onClick={() => handleConversationSelect(conversation)}
                 className={`conversationItem ${
                   conversation.id === activeConversationId ? "selected" : ""
