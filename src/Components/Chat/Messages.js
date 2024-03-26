@@ -1,21 +1,17 @@
-import { doc, onSnapshot } from "firebase/firestore";
+import { onSnapshot, doc } from "firebase/firestore";
 import React, { useContext, useEffect, useState } from "react";
 import { ChatContext } from "../../Context/ChatContext";
 import { db } from "../../Context/firebase";
 import Message from "./Message";
 import ImageModal from "./ImageModal";
-import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Context/AuthContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart, faComments } from "@fortawesome/free-solid-svg-icons";
+import { faComments } from "@fortawesome/free-solid-svg-icons";
 import { useParams } from "react-router-dom";
-import ConversationHeader from "./ConversationHeader";
 
 const Messages = ({ userId, user }) => {
-  const navigate = useNavigate();
-  const { chatId } = useParams();
-
   const [messages, setMessages] = useState([]);
+  const { chatId } = useParams();
   const [conversationData, setConversationData] = useState(null);
   const { currentUser } = useContext(AuthContext);
   const { data, dispatch } = useContext(ChatContext);
@@ -46,27 +42,27 @@ const Messages = ({ userId, user }) => {
         }
       });
 
-      // const userDocRef = doc(db, "newusers", currentUser.uid);
-      // const unSubUser = onSnapshot(userDocRef, (docSnapshot) => {
-      //   if (docSnapshot.exists()) {
-      //     dispatch({
-      //       type: "UPDATE_USER_DATA",
-      //       payload: {
-      //         ...docSnapshot.data(),
-      //         uid: currentUser.uid,
-      //       },
-      //     });
-      //   } else {
-      //     console.error("User document not found. UID:", currentUser.uid);
-      //   }
-      // });
+      const userDocRef = doc(db, "newusers", currentUser.uid);
+      const unSubUser = onSnapshot(userDocRef, (docSnapshot) => {
+        if (docSnapshot.exists()) {
+          dispatch({
+            type: "UPDATE_USER_DATA",
+            payload: {
+              ...docSnapshot.data(),
+              uid: currentUser.uid,
+            },
+          });
+        } else {
+          console.error("User document not found:", currentUser.uid);
+        }
+      });
 
       return () => {
         unSubChat();
-        // unSubUser();
+        unSubUser();
       };
     }
-  }, [chatId, currentUser?.uid, dispatch]);
+  }, [data.chatId, currentUser?.uid, dispatch]);
 
   return (
     <div>

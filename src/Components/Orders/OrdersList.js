@@ -38,25 +38,10 @@ function OrdersList({}) {
 
   const navigate = useNavigate();
 
-  const fetchOrderDetails = async (orderId) => {
-    try {
-      const orderDetailsRef = doc(db, "orders", orderId);
-
-      const docSnapshot = await getDoc(orderDetailsRef);
-
-      if (!docSnapshot.exists()) {
-        throw new Error(`No details found for order ID: ${orderId}`);
-      }
-
-      return docSnapshot.data();
-    } catch (error) {
-      console.error("Error fetching order details:", error);
-    }
-  };
+ 
 
   const handleOrderSelect = async (orderId) => {
     try {
-      const orderDetails = await fetchOrderDetails(orderId);
 
       const enrichedOrder = {
         ...orderId,
