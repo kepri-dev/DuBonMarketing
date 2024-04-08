@@ -2,12 +2,14 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../../Context/AuthContext";
 import { ChatContext } from "../../Context/ChatContext";
 
-const Message = ({ message, openImageModal, openOrderModal }) => {
+const Message = ({ message, openImageModal }) => {
   const { currentUser } = useContext(AuthContext);
   const isCurrentUserSender = message.senderId === currentUser.uid;
   const { data } = useContext(ChatContext);
+
   const ref = useRef();
-  const imgUrl = isCurrentUserSender ? currentUser.imgUrl : data?.user?.imgUrl;
+  const imgUrl = isCurrentUserSender ? currentUser.imgUrl : data.user.imgUrl;
+  const userIds = message.userIds || data.userIds; // Example access, adjust based on your actual data structure
 
   useEffect(() => {
     ref.current?.scrollIntoView({ behavior: "smooth" });
@@ -53,9 +55,11 @@ const Message = ({ message, openImageModal, openOrderModal }) => {
 
   return (
     <div ref={ref} className={`message ${isCurrentUserSender ? "owner" : ""}`}>
-      <div className="messageInfo">
-        <img src={imgUrl} alt="Profile" className="profilePic" />
-      </div>
+      {currentUser.uid !== data.user.uid && (
+        <div className="messageInfo">
+          <img src={imgUrl} alt="Profile" className="profilePic" />
+        </div>
+      )}
 
       <div className="messageContent"> {renderMessageContent()}</div>
     </div>

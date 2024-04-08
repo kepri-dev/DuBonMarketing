@@ -38,6 +38,10 @@ const Conversations = () => {
     "https://firebasestorage.googleapis.com/v0/b/test-firebase-9badc.appspot.com/o/mockProfilePic%2FDALL%C2%B7E%202024-02-26%2018.11.43%20-%20Create%20a%20gender-neutral%20and%20featureless%20default%20profile%20picture%20representing%20a%20silhouette%20of%20a%20face%20and%20upper%20torso.%20Use%20abstract%20shapes%20like%20circles%20%20(1).png?alt=media&token=a71bd835-6b0a-41c6-9fae-f4f201c28ff2";
 
   const getUserDetails = async (userId) => {
+    if (!userId) {
+      console.error("No user ID provided");
+      return null;
+    }
     let userDocSnap = await getDoc(doc(db, "newusers", userId));
     if (!userDocSnap.exists()) {
       userDocSnap = await getDoc(doc(db, "business", userId));
@@ -55,7 +59,7 @@ const Conversations = () => {
     setActiveConversationId(conversationId);
   }, [conversationId]);
 
-  const handleConversationSelect = (conversation) => {
+  const handleConversationSelect = async (conversation) => {
     try {
       dispatch({
         type: "CHANGE_CONVERSATION",
@@ -64,6 +68,7 @@ const Conversations = () => {
           user: conversation.otherUser,
         },
       });
+
       navigate(`/messages/${conversation.id}`);
       setActiveConversationId(conversation.id);
     } catch (error) {

@@ -3,6 +3,7 @@ import { ref, listAll, getDownloadURL } from "firebase/storage";
 import "./Homepage-brands.css";
 import { storage } from "../Context/firebase";
 import { imageListItemBarClasses } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 export default function Homepagebrands() {
   const [previousWork, setPreviousWork] = useState([]);
@@ -14,6 +15,7 @@ export default function Homepagebrands() {
   const [firstCustomer, setFirstCustomer] = useState([]);
   const [secondCustomer, setSecondCustomer] = useState([]);
   const [thirdCustomer, setThirdCustomer] = useState([]);
+  const navigate = useNavigate();
 
   const fetchImageUrls = (folderPath, setStateCallback) => {
     const folderRef = ref(storage, folderPath);
@@ -80,7 +82,7 @@ export default function Homepagebrands() {
             Discover a world of creative talent with Du Bon Marketing, your
             gateway to top-tier UGC creators.
           </h2>
-          <button>Explore Creators</button>
+          <button onClick={() => navigate(`/profils`)}>Explore Creators</button>
         </div>
         <div className="headline-image">
           {previousWork.map((url, index) => (
@@ -107,7 +109,7 @@ export default function Homepagebrands() {
               Peruse our curated selection of over 800+ creators and find the
               perfect match for your brand's vision.
             </p>
-            <button>Discover Now</button>
+            <button onClick={() => navigate(`/profils`)}>Discover Now</button>
           </div>
           <div>
             {stepOne.map((url, index) => (
@@ -127,7 +129,9 @@ export default function Homepagebrands() {
               Initiate conversations, brainstorm ideas, and set the stage for
               remarkable content creation.
             </p>
-            <button>Start the Conversation</button>
+            <button onClick={() => navigate(`/messages`)}>
+              Start the Conversation
+            </button>
           </div>
           <div>
             {stepTwo.map((url, index) => (
@@ -147,7 +151,9 @@ export default function Homepagebrands() {
               Compile a tailored list of your favorite UGC creators for quick
               access and efficient project launches.
             </p>
-            <button>Curate Your List</button>
+            <button onClick={() => navigate(`/favorites`)}>
+              Curate Your List
+            </button>
           </div>
           <div>
             {stepThree.map((url, index) => (
@@ -208,7 +214,12 @@ export default function Homepagebrands() {
                 Facebook, Instagram, TikTok, or boost your organic presence.{" "}
               </p>
               <p>All swiftly and effortlessly.</p>
-              <button className="comparison-action">Join Our Community</button>
+              <button
+                className="comparison-action"
+                onClick={() => navigate(`/profils`)}
+              >
+                Join Our Community
+              </button>
             </div>
 
             <div className="background-market-research">
@@ -317,7 +328,10 @@ export default function Homepagebrands() {
               </table>
             </div>
             <div>
-              <button className="comparison-action">
+              <button
+                onClick={() => navigate(`/profils`)}
+                className="comparison-action"
+              >
                 See all the creators{" "}
               </button>
             </div>

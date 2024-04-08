@@ -46,7 +46,6 @@ function OrdersList({}) {
       const enrichedOrder = {
         ...orderId,
       };
-      console.log(enrichedOrder);
       dispatch({
         type: "CHANGE_CONVERSATION",
         payload: {

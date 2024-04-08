@@ -32,6 +32,7 @@ export const ChatContextProvider = ({ children }) => {
           chatId: newChatId,
         };
 
+
       case "CHANGE_CONVERSATION":
         return {
           ...state,
@@ -66,4 +67,3 @@ export const ChatContextProvider = ({ children }) => {
     </ChatContext.Provider>
   );
 };
-
