@@ -5,6 +5,8 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth, db, storage } from "../Context/firebase";
 
+import { Helmet } from "react-helmet";
+
 const Register = () => {
   const navigate = useNavigate();
   const [userName, setUserName] = useState("");
@@ -60,6 +62,21 @@ const Register = () => {
 
   return (
     <div className="register-container">
+      <Helmet>
+        <script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=AW-16534920107"
+        ></script>
+        <script>
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'AW-16534920107');
+          `}
+        </script>
+      </Helmet>
       <form className="register-form" onSubmit={onSub}>
         <h2>Register</h2>
         <label>Your full name</label>
